@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SVG Laser Cut Files — Gallery</title>
+  <meta name="description" content="SVG gallery with per-item carousel, swipe and mobile-first layout" />
+  <style>
+    :root{
+      --bg:#071028; --card-bg:#ffffff; --muted:#7b8aa3;
+      --accent:#ff7a59; --accent-2:#7c5cff; --radius:12px;
+      --max-w:1280px; --card-w:580; --card-h:387;
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    }
+    html,body{height:100%;margin:0;background:
+      radial-gradient(900px 320px at 8% 6%, rgba(124,92,255,0.06), transparent 8%),
+      linear-gradient(180deg,#071028 0%, #09213a 45%, #071a2e 100%);
+      color:#e6eef9;}
+    .container{max-width:var(--max-w);margin:20px auto;padding:16px;box-sizing:border-box;}
+    header{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+    .brand{display:flex;gap:12px;align-items:center;}
+    .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;}
+    .title h1{margin:0;font-size:18px;color:#fff;}
+    .title p{margin:4px 0 0;color:var(--muted);font-size:13px;}
+    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:white;padding:10px 14px;border-radius:12px;font-weight:700;text-decoration:none;}
+
+    .hero{display:flex;gap:14px;align-items:flex-start;margin-top:14px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);box-shadow:0 8px 24px rgba(3,10,25,0.28);flex-wrap:wrap;}
+    .hero-left{flex:1;min-width:260px}
+    .hero-left h2{margin:0;color:#fff;font-size:20px}
+    .hero-left p{color:var(--muted);margin:8px 0 0;font-size:13px}
+
+    main#catalog{margin-top:18px;}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(4,1fr);}
+    @media (max-width:1200px){ .grid{grid-template-columns:repeat(3,1fr);} }
+    @media (max-width:860px){ .grid{grid-template-columns:repeat(2,1fr);} }
+    @media (max-width:560px){ .grid{grid-template-columns:1fr;} }
+
+    .card{background:var(--card-bg);color:#07203a;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 28px rgba(2,8,20,0.12);transition:transform .18s;min-height:420px;}
+    .card:hover{transform:translateY(-6px)}
+    .card-media{position:relative;background:#f8fafc;overflow:hidden;padding-top:calc(var(--card-h)/var(--card-w)*100%);} /* aspect */
+    .carousel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .carousel-track{display:flex;height:100%;transition:transform .36s ease;will-change:transform}
+    .carousel-slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden}
+    .carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
+
+    .arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(7,32,58,0.6);color:#fff;border:0;width:38px;height:38px;border-radius:999px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:6}
+    .arrow.left{left:10px} .arrow.right{right:10px}
+    .indicators{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:6}
+    .indicators button{width:8px;height:8px;border-radius:50%;border:0;background:rgba(255,255,255,0.45);cursor:pointer}
+    .indicators button.active{background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+
+    .badge{position:absolute;left:12px;top:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:7px 10px;border-radius:10px;font-weight:700;z-index:7}
+    .card-body{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1}
+    .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;gap:8px;flex-wrap:wrap}
+    .name{font-weight:800;margin:6px 0 0;color:#071428}
+    .desc-box{font-size:13px;color:#31425a;line-height:1.35;max-height:96px;overflow:auto;padding-right:6px;border-radius:6px;background:transparent}
+    .price-row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;gap:10px}
+    .price{font-weight:800;background:linear-gradient(90deg,#fff8f5,#fffdfb);padding:8px 10px;border-radius:10px;color:#07203a}
+    .btn-row{display:flex;gap:8px}
+    .btn-small{padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+    .btn-download{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff}
+
+    .center-cta{display:flex;justify-content:center;margin:18px 0}
+    .cta-large{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;padding:12px 16px;border-radius:12px;font-weight:800;border:none;cursor:pointer;font-size:15px;box-shadow:0 10px 24px rgba(124,92,255,0.12)}
+    .reviews{margin-top:22px;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)}
+    .review-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    @media (max-width:900px){ .review-list{grid-template-columns:1fr} }
+    .review{background:#fff;padding:12px;border-radius:10px;color:#07203a;box-shadow:0 8px 24px rgba(2,8,20,0.06);font-size:13px}
+
+    /* Google Sites embedding friendliness: avoid fixed position, use relative layouts and no external fonts. */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo">SVG</div>
+        <div class="title">
+          <h1>SVG Laser Cut Files</h1>
+          <p>High-quality ready-to-cut SVGs • Mobile-first previews</p>
+        </div>
+      </div>
+      <div class="cta-top">
+        <a class="btn-primary" href="https://www.creativefabrica.com/search/ref/12263094/?query=Laser%20Cut%20Files&campaign=SvgFreeFiles">Start Free SVG Download</a>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Hero">
+      <div class="hero-left">
+        <h2>Free Laser Cut Files & SVG Templates – 77,000+ Designs</h2>
+        <p>Instant previews with image carousels per item. Use arrows, click or swipe to browse images.</p>
+      </div>
+    </section>
+
+    <main id="catalog" class="grid" aria-live="polite">
+
+      
+      <!-- Card 1: description provided inline via data-desc (preferred) -->
+      <article class="card" data-desc="This digital download includes a bundle of nine spooky and stunning 3D Halloween pumpkin designs, perfect for creating festive decor with a laser cutter. Each intricate multi-layered design features a unique Halloween scene, from haunted houses and graveyards to witches, werewolves, and a variety of mischievous ghosts and pumpkins. The files are designed for easy assembly, creating a beautiful shadow box effect that’s perfect for adding a festive touch to your decor. This is an ideal project for crafters and a wonderful unique gift for the holiday season. What’s included: nine unique 3D layered Halloween pumpkin designs. Files optimized for laser cutting with clear cut and engrave lines. Designs compatible with 3mm material thickness (as indicated by the “3MM” on the image). File formats included: SVG — the most popular vector file format for laser cutting machines, ensuring clean and precise cuts. DWG — a common format for 2D and 3D drawings, compatible with many laser cutting and CAD software programs. PNG — high-resolution files with a transparent background, useful for mockups and previews. AI — Adobe Illustrator files that are fully editable, allowing for easy customization of size and details. PDF — a universal format for high-quality printing and viewing. EPS — a versatile vector file, compatible with various design programs. Creative uses: home decor — create eye-catching centerpieces for a mantel, table, or windowsill. Gifts — a perfect handmade gift for Halloween, for friends, or family. Shop products — sell the finished physical products at craft fairs, online, or in your own store. Party decor — use as unique decorations for a Halloween party or a haunted house event. These files are designed for a smooth crafting experience, making it easy to create a professional-looking Halloween decoration right from your workshop." data-download-url="https://www.creativefabrica.com/product/3d-halloween-pumpkin-bundle-laser-cut-2/ref/12263094/?sharedfrom=pdp" aria-label="Card Welcome Sign Pumpkin">
+        <div class="card-media">
+          <div class="badge">Popular</div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-7-580x387.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track" role="list"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators" role="tablist"></div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="meta"><span>3D Halloween Pumpkin Bundle - Laser Cut</span><span>SVG #1287</span></div>
+          <h3 class="name">About 3D Halloween Pumpkin Bundle - Laser Cut</h3>
+          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$2.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download" aria-label="Download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="card" data-desc="Files Svg Sea Bottle Laser Cut and layered svg laser file. It is laser cut files are digital files that are used to create designs or patterns using a laser cutter machine! SET of 3. This collection offers a variety of designs that transform ordinary bottles into stunning sea-themed creations. Compatible with popular laser cutting machines, these files empower you to craft beautiful and functional sea creature sculptures and decorative accents. After payment, you will be able to download the .zip file of this product in .AI, .SVG, .DXF, .DWG, .CDR, .EPS, .PDF formats. Please unzip the folder before using the files. ABOUT THE FINISHED PRODUCT: Sea Bottle multilayer design (each finished product): 16 x 7 in. Number of layers: 6. Recommended materials – Plywood, MDF, Acrylic, Plexiglas, Wood. You can increase the size of the design, but when reducing it, consider thin elements. Each layer of the multilayer model is glued; paint before gluing. bottle laser cut | files svg sea | files svg bottle | layered svg files | layered svg laser | laser cuttable files | lazer cut files. THANK YOU & ENJOY!
+" data-download-url="https://www.creativefabrica.com/product/sea-bottle-bundle-multilayer-decoration/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge">Popular</div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/07/31/Sea-Bottle-Bundle-Multilayer-Decoration-Graphics-102919777-1-1-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/07/31/Sea-Bottle-Bundle-Multilayer-Decoration-Graphics-102919777-2-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/07/31/Sea-Bottle-Bundle-Multilayer-Decoration-Graphics-102919777-3-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/07/31/Sea-Bottle-Bundle-Multilayer-Decoration-Graphics-102919777-4-580x386.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Sea Bottle Bundle Multilayer Decoration</span><span>SVG #4421</span></div>
+          <h3 class="name">About Sea Bottle Bundle Multilayer Decoration</h3>
+          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$4.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="card" data-desc="The thickness of the wood is 3mm. Please note that the size of the product should not be changed as it will cause misalignment in the joints. This download includes a zip folder with unique designs available in multiple formats such as SVG, DXF, EPS, PDF, and DWG. These files are widely compatible with popular cutting machines and design software, ensuring seamless integration into a variety of creative projects. Whether you’re creating unique home decor, crafting custom stationery, adding personalized touches to textiles, or producing bold designs for clothing, packaging, or paper crafts, these versatile designs are perfect for any project. They cater to both hobbyists and professionals alike. Explore the unlimited creative opportunities these designs offer — from custom gifts to modern decor, the possibilities are boundless, allowing you to bring your ideas to life!" data-download-url="https://www.creativefabrica.com/product/love-lantern-laser-cut-design/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge">Popular</div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/12/13/Love-Lantern-Laser-Cut-Design-Graphics-111860548-1-1-580x387.png">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Love Lantern Laser Cut Design</span><span>SVG #993</span></div>
+          <h3 class="name">About Love Lantern Laser Cut Design</h3>
+          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$1.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="card" data-desc="The thickness of the wood is 3mm. Please note that the size of the product should not be changed as it will cause misalignment in the joints. This download includes a zip folder with unique designs available in multiple formats such as SVG, DXF, EPS, PDF, and DWG. These files are widely compatible with popular cutting machines and design software, ensuring seamless integration into a variety of creative projects. Whether you’re creating unique home decor, crafting custom stationery, adding personalized touches to textiles, or producing bold designs for clothing, packaging, or paper crafts, these versatile designs are perfect for any project. They cater to both hobbyists and professionals alike. Explore the unlimited creative opportunities these designs offer, from custom gifts to modern decor — the possibilities are boundless, allowing you to bring your ideas to life!" data-download-url="https://www.creativefabrica.com/product/festive-snowman-christmas-lantern/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge">New</div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/10/30/Festive-Snowman-Christmas-Lantern-Graphics-108902723-1-1-580x387.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Festive Snowman Christmas Lantern</span><span>SVG #2206</span></div>
+          <h3 class="name">About Festive Snowman Christmas Lantern</h3>
+          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$2.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+       <!-- Card 5 -->
+      <article class="card" data-desc="Nature Frame SVG Bundle Collection can be used in a wide variety of creative and commercial projects. Here are some of the most popular applications: What’s included: 10 EPS files, 10 set SVG files, 10 set PNG files, 10 set JPG files. Crafting and DIY projects: Cricut and Silhouette designs for vinyl cutting, paper crafting, and card making. Scrapbooking for digital or printed embellishments. Wood signs for laser cutting, engraving, or stenciling. T-shirt and apparel design for screen printing or heat transfer vinyl. Nature SVG, forest frame, floral border, SVG bundle, Cricut design, Silhouette cut file, wildflowers SVG, woodland frame, outdoor decor, vector frame, botanical SVG, nature clipart, printable frame, tree silhouette, wild animal SVG, grass border, rustic SVG, woodland SVG, natural elements, digital download, laser cut SVG, SVG for signs, wildlife SVG, deer SVG, floral SVG, SVG template, garden frame, SVG overlay, frame SVG, nature scene, greenery SVG, outdoor SVG, woodland animals, SVG for crafters, SVG for shirts, SVG for cards, SVG cut file, EPS frame, PNG frame, SVG for printing, Silhouette design, SVG artwork." data-download-url="https://www.creativefabrica.com/product/nature-frame-svg-bundle-collection-5/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge">New</div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-1-1-580x388.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-9-580x387.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Nature Frame SVG Bundle Collection</span><span>SVG #208</span></div>
+          <h3 class="name">About Nature Frame SVG Bundle Collection Graphic</h3>
+          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$2.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+      
+      <!-- Card 6 -->
+      <article class="card" data-desc="Discover the grace and freedom of nature with this Elegant Bird Silhouette Design Bundle, perfect for your next creative project. This collection includes 12 high-quality bird silhouette designs available in SVG, PNG, JPG, and EPS formats, making them ideal for Cricut projects, t-shirt printing, home décor, scrapbooking, card making, laser cutting, and more. Each design showcases the unique beauty of birds in flight and perched positions, capturing a timeless aesthetic that fits both modern and rustic styles. These files are fully scalable and easy to use with popular cutting machines and graphic design software. Whether you’re a crafter, designer, or small business owner, this versatile bundle is a must-have addition to your digital library. 12 EPS files, 12 JPG files, 12 SVG files, 12 PNG files. These digital clip art files can be used for the following: easy to modify and change color, made with 100% vector shapes, fully editable vector EPS. The files are compressed in one ZIP file; you need to extract them using WinZIP, WinRAR, or similar software, or directly double-click and extract them. Thank you." data-download-url="https://www.creativefabrica.com/product/bird-silhouette-design-bundle-19/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge">Popular</div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-9-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-10-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-11-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-12-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-13-580x387.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Bird Silhouette Design Bundle</span><span>SVG #5258</span></div>
+          <h3 class="name">About Bird Silhouette Design Bundle Graphic</h3>
+          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$17.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 7 -->
+      <article class="card" data-desc="Create stunning holiday accessories with this Christmas Custom Ornament Earrings Line Art Bundle. This collection features 39 unique designs of intricate ornament earrings, perfect for adding a festive touch to your seasonal projects. Each design is provided in SVG, EPS, AI, and DXF formats, ensuring compatibility with popular cutting machines like Cricut and Silhouette. Features: 39 unique Christmas ornament earring designs. File formats included: SVG, EPS, AI, DXF. Perfect for DIY jewelry, holiday gifts, and craft projects. Compatible with Cricut, Silhouette, Glowforge, and other laser cutters. High-quality line art — clean, detailed, and ready to cut. Usage ideas: create custom earrings for Christmas parties and gifts, design festive jewelry for holiday markets or personal use, add charm to DIY projects and handmade crafts. Whether you’re a professional crafter or just starting, this bundle is your go-to solution for creating timeless, festive designs. Terms of use: for personal and small commercial use. Reselling or redistributing the files is prohibited. Add a festive sparkle to your holiday crafts with this versatile bundle." data-download-url="https://www.creativefabrica.com/product/christmas-ornament-earrings-bundle/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge"></div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/11/12/Christmas-Ornament-Earrings-bundle-Graphics-109769196-1-1-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/11/12/Christmas-Ornament-Earrings-bundle-Graphics-109769196-2-580x386.jpg, ">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Christmas Ornament Earrings Bundle</span><span>SVG #225</span></div>
+          <h3 class="name">About Christmas Ornament Earrings Bundle Graphic</h3>
+          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$3.90</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 8 -->
+      <article class="card" data-desc="ChatGPT сказал:
+
+Mix and match your favorite dog breed with one of 12 unique quotes. There are 75 dog breeds and 12 quotes in this Bookmark SVG Bundle. To use it, open the Quotes XCS files, choose the one you need, click, copy, and paste it onto the dog bookmark of your choice. Each quote will fit perfectly on every dog breed bookmark. The size is approximately 1.8″ x 6″, and the ribbon hole is a rounded rectangle measuring 6.5mm x 6.5mm. File formats available: SVG and XCS. List of dog breed bookmarks: Airedale Terrier, Akita Inu, Alaskan Malamute, Basenji, Bassethound, Beagle, Belgian Malinois, Bernese Mountain, Bichon Frise, Biewer Terrier, Black Labs, Bloodhound, Blue Heeler, Border Collie, Borzoi, Boston Terrier, Boxer, Bulldog, Cairn Terrier, Cane Corso, Cavalier King Charles, Chihuahua, Chinese Crested, Chow Chow, Cocker Spaniel, Cockerpoo, Corgi, Dachshund, Dalmatian, Dobermann, Dutch Shepherd, English Bull Terrier, English Mastiff, English Setter, French Bulldog, German Shepherd, German Spitz, Golden Retriever, Golden Doodle, Great Dane, Great Pyrenees, Greyhound, Havanese, Jack Russell Terrier, Komondor, Labrador, Lhasa Apso, Maltese, Mini Pinscher, Newfoundland, Old English Sheepdog, Papillon, Pekingese, Pitbull Terrier, Pomeranian, Pug, Rhodesian Ridgeback, Rottweiler, Rough Collie, Saint Bernard, Samoyed, Schnauzer, Sharpei, Shiba Inu, Shih Tzu, Siberian Husky, Staffordshire Bull, Standard Poodle, Toy Poodle, Vizsla, Walker Hound, Weimaraner, West Highland Terrier, Whippet, Yorkshire Terrier." data-download-url="https://www.creativefabrica.com/product/dog-bookmarks-with-quote-laser-cut-files/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge"></div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-1-1-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-2-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-3-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-4-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-5-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-6-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-7-580x386.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Dog Bookmarks with Quote Laser Cut Files</span><span>SVG #3589</span></div>
+          <h3 class="name">About Dog Bookmarks with Quote Laser Cut Files</h3>
+          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$4.99</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 9 -->
+
+      <article class="card" data-desc="This is a collection of laser-cut ready files for creating stylish and unique handbags from plywood or MDF. Each design allows you to craft a beautiful, one-of-a-kind accessory with intricate details and an original shape. These files are perfect for DIY enthusiasts, fashion creators, or anyone looking to produce high-quality, handcrafted wooden bags. Easily assembled after cutting, these bags make a wonderful addition to any wardrobe or a thoughtful, personalized gift. About the finished product: clutch size (finished product) — 8 x 9 x 3 inches, with the largest piece measuring 8 x 18.3 inches. Recommended materials include plywood, MDF, acrylic, and wood. Design is for 3mm thickness. For your convenience, the downloadable zip folder contains files in multiple formats: AI, SVG, DXF, DWG, CDR, EPS, and PDF." data-download-url="https://www.creativefabrica.com/product/set-of-3-laser-cut-wooden-bag/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge">New</div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-2-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-9-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-10-580x387.jpg, ">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Set of 3 Laser Cut Wooden Bag</span><span>SVG #2299</span></div>
+          <h3 class="name">About Set of 3 Laser Cut Wooden Bag</h3>
+          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$10.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- Card 10 -->
+
+      <article class="card" data-desc="Santa Mail Boxes Laser Cut Bundle. Please note: this is a digital product, no physical product will be sent — photos are for inspiration purposes only. Your purchase will include a zip folder with five designs in SVG, DXF, EPS, PDF, JPG, and PNG file formats. Material width required for this project is 3mm. You can use these designs to create home decor, stationery, textiles, tableware, prints for fashionable clothes, paper crafts, packaging, and many other creative projects. The creation options are endless. Thank you for visiting my shop. Please write me a message if you have any questions. Enjoy." data-download-url="https://www.creativefabrica.com/product/santa-mail-boxes-laser-cut-bundle/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge">New</div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-9-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-10-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-11-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-12-580x387.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Santa Mail Boxes Laser Cut Bundle</span><span>SVG #6586</span></div>
+          <h3 class="name">About Santa Mail Boxes Laser Cut Bundle</h3>
+          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$3.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- Card 11 -->
+
+      <article class="card" data-desc="Christmas House Laser Cut SVG Set 01. Christmas Houses Set 1 includes six styles of laser cut files, perfect for Glowforge, CNC, or other cutting machines. These designs can be used to create nightlights, holiday decorations, or thoughtful Christmas gifts. Dimensions: 140 x 98 x 98 mm. Recommended materials: plywood, MDF, acrylic, plexiglass, metal, cardboard, or paper. Recommended wood thickness: 1/12″ (3mm). You will receive vector and image files in multiple formats — EPS, SVG, DXF, AI, PNG, JPG, and PDF. The design can be scaled as needed." data-download-url="https://www.creativefabrica.com/product/christmas-house-laser-cut-svg-set01/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge"></div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2023/10/20/Christmas-House-Laser-Cut-SVG-Set01-Graphics-82093150-1-1-580x395.jpg, https://www.creativefabrica.com/wp-content/uploads/2023/10/20/Christmas-House-Laser-Cut-SVG-Set01-Graphics-82093150-2-580x395.jpg, https://www.creativefabrica.com/wp-content/uploads/2023/10/20/Christmas-House-Laser-Cut-SVG-Set01-Graphics-82093150-3-580x395.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Christmas House Laser Cut SVG Set01</span><span>SVG #2911</span></div>
+          <h3 class="name">About Christmas House Laser Cut SVG Set01</h3>
+          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$2.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- Card 12 -->
+
+      <article class="card" data-desc="PUZZLE is a multilayer layout and a creative design for your ideas. PUZZLE digital multilayer layout files are specially prepared for laser cutters, CNC router machines, and other cutting devices. The Puzzle Wall Art is laser-cut from MDF wood, giving it an elegant appearance that fits perfectly into a variety of décor styles. Wood wall art is becoming one of the most popular forms of modern home decoration. This wall art set makes a thoughtful housewarming gift and a stylish interior accent. After payment, you will be able to download a ZIP file containing the product in AI, SVG, DXF, DWG, CDR, EPS, and PDF formats. Please unzip the folder before using the files. About the finished product: PUZZLE multilayer layout size (finished product) — 44 x 25 inches. Number of layers — 6. Recommended materials — plywood, MDF, acrylic, plexiglass, metal, cardboard, paper. Recommended material thickness — 3–6 mm (1/12 in – 1/4 in). You can increase the size of the design, but when reducing it, consider the thin elements. Each layer of the multilayer model should be glued; paint before gluing. Layered laser cut, laser cut files, laser cut wall art, laser cut SVG, wall panel laser cut, laser cutting, laser art, wood laser cut, laser cut panel, laser engraved, ornament SVG, Glowforge SVG, mandala SVG. Thank you and enjoy." data-download-url="https://www.creativefabrica.com/product/puzzle-multilayer-laser-cut-files/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge">Popular</div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-6-580x387.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Puzzle Multilayer Laser Cut Filesr</span><span>SVG #101</span></div>
+          <h3 class="name">About Puzzle Multilayer Laser Cut Files</h3>
+          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$4.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- Card 13 -->
+
+      <article class="card" data-desc="Spread the holiday cheer with our festive Advent Calendar laser cut file. This beautifully designed calendar adds a touch of magic to the countdown to Christmas. Each numbered compartment holds a delightful surprise, making it a perfect way to build excitement and anticipation. Each individual house in the assembled advent calendar measures 2.76 x 2.95 x 2.6 inches (70 x 75 x 65 mm). The overall size of the completed calendar will depend on your chosen arrangement — you can line the houses up, form a tree shape, place them on the included stand, or create any other configuration you prefer. This design is made for 3mm material thickness. Choose from a variety of materials to match your desired aesthetic, such as plywood, MDF, acrylic, or others. Once you’ve selected your material, simply import the digital file (available in AI, SVG, DXF, DWG, CDR, EPS, and PDF formats) into your preferred design software for easy customization.
+" data-download-url="https://www.creativefabrica.com/product/days-until-christmas-advent-calendar/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge"></div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-9-580x387.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Days Until Christmas Advent Calendar</span><span>SVG #22</span></div>
+          <h3 class="name">About Days Until Christmas Advent Calendar</h3>
+          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$3.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+
+      <!-- Card 14 -->
+
+      <article class="card" data-desc="Set of 7: Laser Cut File Calendar Clock DXF Cutting File and Laser Cut Watch Files. This multilayer layout is a creative design for your ideas. Wall Calendar Clock digital multilayer layout files are specially prepared for laser cutters, CNC router machines, and other cutting devices. Explore this laser cut wall clock design for a unique or custom handmade décor piece from the LaserCutano shop. You can create seven variations of wall calendars combined with clocks. Using quality materials gives you the opportunity to produce fresh and creative designs. The design includes five layers, but you can add or remove layers depending on the size of your clock mechanism. After payment, you will be able to download a ZIP file containing the product in AI, SVG, DXF, DWG, CDR, EPS, and PDF formats. Please unzip the folder before using the files." data-download-url="https://www.creativefabrica.com/product/perpetual-calendar-clock-set-of-7/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge"></div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-9-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-10-580x387.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>PERPETUAL CALENDAR & CLOCK SET of 7</span><span>SVG #5923</span></div>
+          <h3 class="name">About PERPETUAL CALENDAR & CLOCK SET of 7</h3>
+          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$6.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+
+      <!-- Card 15 -->
+
+      <article class="card" data-desc="Bring your creative vision to life with our Book Nook kit, which includes DXF, SVG, and JPG files. What’s included: DXF and SVG files for laser cutting, providing detailed designs for clean, professional results, and JPG files for easy printing and manual cutting with scissors. If you prefer to use a laser cutter, these files are optimized for precise and accurate laser cuts. Important notes: colors may vary depending on the printer and materials you use, so feel free to experiment for the best results. You can use battery-operated or electric LEDs for lighting. Glue is required for assembling the model." data-download-url="https://www.creativefabrica.com/product/pub-book-nook-laser-cut-svg-dxf-jpg/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge">a hit of sales</div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/09/23/Pub-Book-Nook-Laser-Cut-Svg-Dxf-Jpg-Laser-Cutting-131403583-1-1-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/09/23/Pub-Book-Nook-Laser-Cut-Svg-Dxf-Jpg-Laser-Cutting-131403583-2-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/09/23/Pub-Book-Nook-Laser-Cut-Svg-Dxf-Jpg-Laser-Cutting-131403583-3-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/09/23/Pub-Book-Nook-Laser-Cut-Svg-Dxf-Jpg-Laser-Cutting-131403583-4-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/09/23/Pub-Book-Nook-Laser-Cut-Svg-Dxf-Jpg-Laser-Cutting-131403583-5-580x387.png, ">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Pub Book Nook: Laser Cut Svg - Dxf - Jpg</span><span>SVG #3651</span></div>
+          <h3 class="name">About Pub Book Nook: Laser Cut Svg - Dxf - Jpg</h3>
+          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$15.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- Card 16 -->
+
+      <article class="card" data-desc="Paw Keychain with gluing template – Pet Name, Digital File, Custom Pet Paw Name Keychain, available in SVG, PDF, LBRN2, and DXF formats, compatible with Lightburn and Glowforge. This is a digital file designed for laser cutting and Glowforge machines. The vector file has been fully tested and is ready for use. After purchasing and downloading, you can create your own personalized keychains for personal use or sell the finished products to clients as part of your business.
+" data-download-url="https://www.creativefabrica.com/product/dog-paw-keychain-with-gluing-template/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge"></div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/03/02/Dog-Paw-Keychain-with-gluing-template-Graphics-117111266-1-1-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/03/02/Dog-Paw-Keychain-with-gluing-template-Graphics-117111266-2-580x387.png, ">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Dog Paw Keychain with Gluing Template</span><span>SVG #68691</span></div>
+          <h3 class="name">About Dog Paw Keychain with Gluing Template</h3>
+          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$1.60</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+
+      <!-- Card 17 -->
+
+      <article class="card" data-desc="Paw Keychain with gluing template – Pet Name, Digital File, Custom Pet Paw Name Keychain, available in SVG, PDF, LBRN2, and DXF formats, compatible with Lightburn and Glowforge. This digital file is designed for laser cutting and Glowforge machines. The vector file is fully tested and ready for use. After purchasing and downloading, you can easily create personalized keychains for yourself or offer the finished products for sale to clients as part of your business.
+" data-download-url="https://www.creativefabrica.com/product/birman-cat-personalized-keychain/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge"></div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/05/18/Birman-Cat-Personalized-Keychain-Graphics-122315373-1-1-580x387.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Birman Cat Personalized Keychain</span><span>SVG #2201</span></div>
+          <h3 class="name">About Birman Cat Personalized Keychain</h3>
+          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$1.00</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Card 18 -->
+
+      <article class="card" data-desc="Hamster House – Laser Cut Template, compatible with 3 mm, 4 mm, and 1/8 inch material thickness. This digital vector model is perfect for laser cutting or CNC projects. The design includes detailed patterns for creating a miniature hamster house.📦 Instant Download No physical item will be shipped.🧩 File Formats Included: DXF, DWG, CDR, SVG 📐 Dimensions: Length: 121 mm Width: 84 mm Height: 86 mm These files are fully compatible with all major laser cutting software. If you have any questions or encounter any issues, please feel free to reach out — support is always available." data-download-url="https://www.creativefabrica.com/product/plywood-hamster-house-laser-cut/ref/12263094/?sharedfrom=pdp">
+        <div class="card-media">
+          <div class="badge">New</div>
+          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2022/05/26/Plywood-Hamster-House-Laser-Cut-Graphics-31210214-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/05/26/Plywood-Hamster-House-Laser-Cut-Graphics-31210214-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/05/26/Plywood-Hamster-House-Laser-Cut-Graphics-31210214-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/05/26/Plywood-Hamster-House-Laser-Cut-Graphics-31210214-4-580x387.jpg">
+            <button class="arrow left" aria-label="previous">‹</button>
+            <div class="carousel-track"></div>
+            <button class="arrow right" aria-label="next">›</button>
+            <div class="indicators"></div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="meta"><span>Plywood Hamster House Laser Cut</span><span>SVG #2201</span></div>
+          <h3 class="name">About Plywood Hamster House Laser Cut</h3>
+          <div class="desc-box" data-max-chars="600"><p>Loading description…</p></div>
+          <div class="price-row">
+            <div class="price">$1.75</div>
+            <div class="btn-row">
+              <button class="btn-small btn-download">Download Free</button>
+            </div>
+          </div>
+        </div>
+      </article>
+    </main>
+
+    
+
+    <div class="center-cta">
+      <a class="btn-primary" href="https://www.creativefabrica.com/search/ref/12263094/?query=Popular%20Laser%20Cutting%20Files&page=61&campaign=laserCutFreeMasch">Start Free SVG Download</a>
+    </div>
+
+    <section class="reviews" aria-label="Customer reviews">
+      <h3 style="margin:0 0 12px;color:#fff">What Our Artisans Say</h3>
+      <div class="review-list">
+        <div class="review"><b>Anna P.</b> Fast download, clean vectors. The layered mandala assembled quickly and looks premium.</div>
+        <div class="review"><b>Marco D.</b> Kerf guidance saved me material. Files are professional and ready for production.</div>
+        <div class="review"><b>Rina S.</b> Clear licensing and excellent results for custom lamp projects.</div>
+      </div>
+    </section>
+
+    <footer style="margin-top:18px">
+      <div style="font-size:13px;color:var(--muted);">© 2025 SVG Laser Cut Files</div>
+    </footer>
+  </div>
+
+  <script>
+    // ===== CAROUSEL (no autoplay) =====
+    document.querySelectorAll('.carousel').forEach(initCarousel);
+    function initCarousel(carousel){
+      const track = carousel.querySelector('.carousel-track');
+      const indicators = carousel.querySelector('.indicators');
+      const leftBtn = carousel.querySelector('.arrow.left');
+      const rightBtn = carousel.querySelector('.arrow.right');
+      const raw = (carousel.dataset.images || '').trim();
+      const urls = raw ? raw.split(',').map(s=>s.trim()) : ['https://picsum.photos/580/387?random=1'];
+      // create slides + indicators
+      const slides = [];
+      urls.forEach((url,i)=>{
+        const slide = document.createElement('div'); slide.className='carousel-slide';
+        const img = document.createElement('img'); img.src=url; img.loading='lazy'; img.alt = `Preview ${i+1}`;
+        slide.appendChild(img); track.appendChild(slide); slides.push(slide);
+        const dot = document.createElement('button'); if(i===0) dot.classList.add('active');
+        dot.addEventListener('click', ()=> { goTo(i, true); });
+        indicators.appendChild(dot);
+      });
+
+      let active = 0;
+      let base = 0;
+      let dragging = false;
+      let startX = 0;
+      let pointerId = null;
+
+      function updateDots(){ Array.from(indicators.children).forEach((d,i)=> d.classList.toggle('active', i===active)); }
+      function setTranslate(x, instant=false){ if(instant) track.style.transition='none'; else track.style.transition='transform .36s ease'; track.style.transform = `translateX(${x}px)`; if(instant) requestAnimationFrame(()=> track.style.transition='transform .36s ease'); }
+      function goTo(idx, instant=false){
+        active = (idx + slides.length) % slides.length;
+        const w = carousel.clientWidth;
+        base = -active * w;
+        setTranslate(base, instant);
+        updateDots();
+      }
+      function next(){ goTo(active + 1); }
+      function prev(){ goTo(active - 1); }
+
+      if(leftBtn) leftBtn.addEventListener('click', e=>{ e.stopPropagation(); prev(); });
+      if(rightBtn) rightBtn.addEventListener('click', e=>{ e.stopPropagation(); next(); });
+
+      // click on image area -> next
+      carousel.addEventListener('click', e=>{
+        if(e.target.closest('button')) return;
+        next();
+      });
+
+      // pointer events
+      carousel.addEventListener('pointerdown', e=>{
+        pointerId = e.pointerId; carousel.setPointerCapture(pointerId);
+        dragging = true; startX = e.clientX; track.style.transition='none';
+      });
+      carousel.addEventListener('pointermove', e=>{
+        if(!dragging || e.pointerId !== pointerId) return;
+        const dx = e.clientX - startX; setTranslate(base + dx, true);
+      });
+      carousel.addEventListener('pointerup', e=>{
+        if(!dragging || e.pointerId !== pointerId) return;
+        const dx = e.clientX - startX; dragging=false; carousel.releasePointerCapture(pointerId);
+        const w = carousel.clientWidth;
+        if(dx > w*0.15) prev();
+        else if(dx < -w*0.15) next();
+        else goTo(active);
+      });
+      carousel.addEventListener('pointercancel', ()=>{ dragging=false; goTo(active); });
+
+      // touch fallback
+      carousel.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; dragging=true; track.style.transition='none'; }, {passive:true});
+      carousel.addEventListener('touchmove', e=>{ if(!dragging) return; const dx = e.touches[0].clientX - startX; setTranslate(base + dx, true); }, {passive:true});
+      carousel.addEventListener('touchend', e=>{ if(!dragging) return; const dx = e.changedTouches[0].clientX - startX; dragging=false; const w = carousel.clientWidth; if(dx > w*0.15) prev(); else if(dx < -w*0.15) next(); else goTo(active); }, {passive:true});
+
+      // resize observer to keep px-based translate correct
+      new ResizeObserver(()=> goTo(active, true)).observe(carousel);
+
+      // init position
+      goTo(0, true);
+    }
+
+    // ===== DESCRIPTION: inline data-desc OR existing inner text =====
+    document.querySelectorAll('.card').forEach(card=>{
+      const descBox = card.querySelector('.desc-box');
+      if(!descBox) return;
+      // priority: data-desc attribute (text), else keep inline children inside .desc-box
+      const txt = card.dataset.desc ? card.dataset.desc.trim() : (descBox.innerText || '').trim();
+      const max = parseInt(descBox.dataset.maxChars || '300', 10);
+      function renderText(full){
+        const base = full ? txt : (txt.length > max ? txt.slice(0, max) + '…' : txt);
+        descBox.innerHTML = '<p>' + (base || 'Описание недоступно.') + '</p>';
+        if(!full && txt.length > max){
+          const btn = document.createElement('button');
+          btn.textContent = 'Show more';
+          btn.style.marginTop='8px'; btn.style.background='transparent'; btn.style.border='none'; btn.style.color='#1850b8'; btn.style.cursor='pointer';
+          btn.addEventListener('click', ()=> { renderText(true); });
+          descBox.appendChild(btn);
+        } else if (full && txt.length > max) {
+          const btn = document.createElement('button');
+          btn.textContent = 'Show less';
+          btn.style.marginTop='8px'; btn.style.background='transparent'; btn.style.border='none'; btn.style.color='#1850b8'; btn.style.cursor='pointer';
+          btn.addEventListener('click', ()=> { renderText(false); });
+          descBox.appendChild(btn);
+        }
+      }
+      renderText(false);
+    });
+
+    // ===== DOWNLOAD buttons wired to data-download-url =====
+    document.querySelectorAll('.card').forEach(card=>{
+      const url = card.dataset.downloadUrl;
+      const btn = card.querySelector('.btn-download');
+      if(!btn) return;
+      if(url){
+        btn.addEventListener('click', ()=> window.open(url, '_blank'));
+      } else {
+        btn.addEventListener('click', ()=> alert('Ссылка на скачивание не указана.'));
+      }
+    });
+
+    // Optional: small UX improvement for Google Sites embedding: ensure iframes scale, avoid fixed positioning.
+
+  </script>
+</body>
+</html>
