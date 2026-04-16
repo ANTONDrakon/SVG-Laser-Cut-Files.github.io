@@ -1,700 +1,1806 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SVG Laser Cut Files — Gallery</title>
-  <meta name="description" content="SVG gallery with per-item carousel, swipe and mobile-first layout" />
-  <style>
-    :root{
-      --bg:#071028; --card-bg:#ffffff; --muted:#7b8aa3;
-      --accent:#ff7a59; --accent-2:#7c5cff; --radius:12px;
-      --max-w:1280px; --card-w:580; --card-h:387;
-      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover 2026's hottest prom dresses, wedding guest outfits, bridesmaid dresses, gala gowns & formal wear. Shop trending evening dresses for every special occasion.">
+    <meta name="keywords" content="prom dresses 2026, wedding guest dress, bridesmaid dress, gala dress, red carpet dress, birthday outfit women, graduation dress, formal event outfit, evening dresses, formal gowns">
+    <meta name="author" content="Bae Moments Collection">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph for Pinterest -->
+    <meta property="og:title" content="2026 Formal Dress Collection | Prom, Wedding, Gala & More">
+    <meta property="og:description" content="Shop the hottest evening dresses for prom, weddings, galas & special events. Trending styles for every occasion.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1d63f402f-8212-4425-afa9-fa89c3503938.png">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="2026 Formal Dress Collection | Prom, Wedding, Gala & More">
+    <meta name="twitter:description" content="Shop the hottest evening dresses for prom, weddings, galas & special events.">
+    
+    <title>2026 Formal Dress Collection | Prom, Wedding Guest, Bridesmaid & Gala Dresses</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👗</text></svg>">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://image.qwenlm.ai">
+    
+    <style>
+        /* CSS Reset & Base Styles */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        :root {
+            --color-black: #0a0a0a;
+            --color-white: #ffffff;
+            --color-red: #c41e3a;
+            --color-beige: #f5f0eb;
+            --color-taupe: #b8a99a;
+            --color-cream: #faf8f5;
+            --color-charcoal: #2a2a2a;
+            --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            --shadow-soft: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-cream);
+            color: var(--color-charcoal);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+        
+        /* Header Styles */
+        .header {
+            background: linear-gradient(135deg, var(--color-black) 0%, var(--color-charcoal) 100%);
+            color: var(--color-white);
+            padding: 2rem 1rem;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-soft);
+        }
+        
+        .header-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+        
+        .header-tagline {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .header-cta {
+            display: inline-block;
+            background: var(--color-red);
+            color: var(--color-white);
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: var(--transition-smooth);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        
+        .header-cta:hover {
+            background: #a01830;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(196, 30, 58, 0.4);
+        }
+        
+        /* Navigation Categories */
+        .nav-categories {
+            background: var(--color-white);
+            padding: 1rem;
+            position: sticky;
+            top: 120px;
+            z-index: 999;
+            box-shadow: var(--shadow-soft);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        
+        .nav-categories::-webkit-scrollbar {
+            height: 4px;
+        }
+        
+        .nav-categories::-webkit-scrollbar-thumb {
+            background: var(--color-taupe);
+            border-radius: 2px;
+        }
+        
+        .nav-list {
+            display: flex;
+            gap: 0.75rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            min-width: max-content;
+        }
+        
+        .nav-item a {
+            display: block;
+            padding: 0.5rem 1.25rem;
+            background: var(--color-beige);
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--color-charcoal);
+            transition: var(--transition-smooth);
+            white-space: nowrap;
+        }
+        
+        .nav-item a:hover,
+        .nav-item a.active {
+            background: var(--color-black);
+            color: var(--color-white);
+        }
+        
+        /* Main Content */
+        .main-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        /* Section Styles */
+        .section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--color-black);
+            margin-bottom: 0.5rem;
+            text-transform: capitalize;
+        }
+        
+        .section-subtitle {
+            font-size: 1rem;
+            color: var(--color-taupe);
+            font-weight: 400;
+        }
+        
+        /* Product Grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Product Card */
+        .product-card {
+            background: var(--color-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow-soft);
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .product-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            background: var(--color-beige);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            loading: lazy;
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--color-red);
+            color: var(--color-white);
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .product-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 60%);
+            opacity: 0;
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: flex-end;
+            padding: 1rem;
+        }
+        
+        .product-card:hover .product-overlay {
+            opacity: 1;
+        }
+        
+        .product-quick-view {
+            background: var(--color-white);
+            color: var(--color-black);
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .product-info {
+            padding: 1.25rem;
+        }
+        
+        .product-category {
+            font-size: 0.75rem;
+            color: var(--color-taupe);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.35rem;
+        }
+        
+        .product-name {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--color-black);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--color-red);
+        }
+        
+        .product-price .original {
+            font-size: 0.85rem;
+            color: var(--color-taupe);
+            text-decoration: line-through;
+            margin-left: 0.5rem;
+            font-weight: 400;
+        }
+        
+        .product-cta {
+            display: block;
+            width: 100%;
+            background: var(--color-black);
+            color: var(--color-white);
+            text-align: center;
+            padding: 0.75rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition-smooth);
+            margin-top: 1rem;
+            border-radius: 8px;
+        }
+        
+        .product-cta:hover {
+            background: var(--color-red);
+        }
+        
+        /* Bottom CTA Section */
+        .bottom-cta {
+            background: linear-gradient(135deg, var(--color-black) 0%, var(--color-charcoal) 100%);
+            color: var(--color-white);
+            padding: 3rem 1rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .bottom-cta-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .bottom-cta-text {
+            font-size: 1rem;
+            opacity: 0.9;
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .bottom-cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .bottom-cta-btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+            transition: var(--transition-smooth);
+        }
+        
+        .bottom-cta-btn.primary {
+            background: var(--color-red);
+            color: var(--color-white);
+        }
+        
+        .bottom-cta-btn.primary:hover {
+            background: #a01830;
+            transform: translateY(-2px);
+        }
+        
+        .bottom-cta-btn.secondary {
+            background: var(--color-white);
+            color: var(--color-black);
+        }
+        
+        .bottom-cta-btn.secondary:hover {
+            background: var(--color-beige);
+            transform: translateY(-2px);
+        }
+        
+        /* SEO Keywords Section */
+        .seo-keywords {
+            background: var(--color-beige);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        
+        .seo-keywords-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-black);
+            margin-bottom: 1rem;
+        }
+        
+        .seo-keywords-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            list-style: none;
+        }
+        
+        .seo-keyword-item {
+            background: var(--color-white);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--color-charcoal);
+            transition: var(--transition-smooth);
+        }
+        
+        .seo-keyword-item:hover {
+            background: var(--color-black);
+            color: var(--color-white);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--color-black);
+            color: var(--color-white);
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        
+        .footer-text {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-link {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            transition: var(--transition-smooth);
+        }
+        
+        .footer-link:hover {
+            opacity: 1;
+            color: var(--color-red);
+        }
+        
+        /* Loading Animation */
+        .loading-skeleton {
+            background: linear-gradient(90deg, var(--color-beige) 25%, var(--color-cream) 50%, var(--color-beige) 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        /* Scroll to Top */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: var(--color-red);
+            color: var(--color-white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition-smooth);
+            z-index: 998;
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .scroll-top:hover {
+            transform: translateY(-4px);
+        }
+        
+        /* Urgency Banner */
+        .urgency-banner {
+            background: var(--color-red);
+            color: var(--color-white);
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .header {
+                padding: 1.5rem 1rem;
+            }
+            
+            .header-logo {
+                font-size: 1.4rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .nav-categories {
+                top: 100px;
+            }
+            
+            .bottom-cta-title {
+                font-size: 1.4rem;
+            }
+            
+            .scroll-top {
+                bottom: 1rem;
+                right: 1rem;
+                width: 45px;
+                height: 45px;
+            }
+        }
+    </style>
+    
+    <!-- Structured Data / Schema Markup -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "2026 Formal Dress Collection",
+        "description": "Discover trending prom dresses, wedding guest outfits, bridesmaid dresses, gala gowns and formal wear for every special occasion in 2026.",
+        "url": "https://baemoments.com",
+        "mainEntity": {
+            "@type": "ItemList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Red Ballgown Prom Dress"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Black Sequin Mermaid Gown"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "White Lace A-Line Dress"
+                }
+            ]
+        }
     }
-    html,body{height:100%;margin:0;background:
-      radial-gradient(900px 320px at 8% 6%, rgba(124,92,255,0.06), transparent 8%),
-      linear-gradient(180deg,#071028 0%, #09213a 45%, #071a2e 100%);
-      color:#e6eef9;}
-    .container{max-width:var(--max-w);margin:20px auto;padding:16px;box-sizing:border-box;}
-    header{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;}
-    .brand{display:flex;gap:12px;align-items:center;}
-    .logo{width:52px;height:52px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;}
-    .title h1{margin:0;font-size:18px;color:#fff;}
-    .title p{margin:4px 0 0;color:var(--muted);font-size:13px;}
-    .btn-primary{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;color:white;padding:10px 14px;border-radius:12px;font-weight:700;text-decoration:none;}
-
-    .hero{display:flex;gap:14px;align-items:flex-start;margin-top:14px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);box-shadow:0 8px 24px rgba(3,10,25,0.28);flex-wrap:wrap;}
-    .hero-left{flex:1;min-width:260px}
-    .hero-left h2{margin:0;color:#fff;font-size:20px}
-    .hero-left p{color:var(--muted);margin:8px 0 0;font-size:13px}
-
-    main#catalog{margin-top:18px;}
-    .grid{display:grid;gap:16px;grid-template-columns:repeat(4,1fr);}
-    @media (max-width:1200px){ .grid{grid-template-columns:repeat(3,1fr);} }
-    @media (max-width:860px){ .grid{grid-template-columns:repeat(2,1fr);} }
-    @media (max-width:560px){ .grid{grid-template-columns:1fr;} }
-
-    .card{background:var(--card-bg);color:#07203a;border-radius:12px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 8px 28px rgba(2,8,20,0.12);transition:transform .18s;min-height:420px;}
-    .card:hover{transform:translateY(-6px)}
-    .card-media{position:relative;background:#f8fafc;overflow:hidden;padding-top:calc(var(--card-h)/var(--card-w)*100%);} /* aspect */
-    .carousel{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .carousel-track{display:flex;height:100%;transition:transform .36s ease;will-change:transform}
-    .carousel-slide{min-width:100%;height:100%;display:flex;align-items:center;justify-content:center;overflow:hidden}
-    .carousel-slide img{width:100%;height:100%;object-fit:cover;display:block}
-
-    .arrow{position:absolute;top:50%;transform:translateY(-50%);background:rgba(7,32,58,0.6);color:#fff;border:0;width:38px;height:38px;border-radius:999px;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:6}
-    .arrow.left{left:10px} .arrow.right{right:10px}
-    .indicators{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:6}
-    .indicators button{width:8px;height:8px;border-radius:50%;border:0;background:rgba(255,255,255,0.45);cursor:pointer}
-    .indicators button.active{background:linear-gradient(90deg,var(--accent),var(--accent-2))}
-
-    .badge{position:absolute;left:12px;top:12px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff;padding:7px 10px;border-radius:10px;font-weight:700;z-index:7}
-    .card-body{padding:12px;display:flex;flex-direction:column;gap:8px;flex:1}
-    .meta{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;gap:8px;flex-wrap:wrap}
-    .name{font-weight:800;margin:6px 0 0;color:#071428}
-    .desc-box{font-size:13px;color:#31425a;line-height:1.35;max-height:96px;overflow:auto;padding-right:6px;border-radius:6px;background:transparent}
-    .price-row{display:flex;align-items:center;justify-content:space-between;margin-top:auto;gap:10px}
-    .price{font-weight:800;background:linear-gradient(90deg,#fff8f5,#fffdfb);padding:8px 10px;border-radius:10px;color:#07203a}
-    .btn-row{display:flex;gap:8px}
-    .btn-small{padding:10px 12px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
-    .btn-download{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#fff}
-
-    .center-cta{display:flex;justify-content:center;margin:18px 0}
-    .cta-large{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:white;padding:12px 16px;border-radius:12px;font-weight:800;border:none;cursor:pointer;font-size:15px;box-shadow:0 10px 24px rgba(124,92,255,0.12)}
-    .reviews{margin-top:22px;padding:16px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent)}
-    .review-list{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-    @media (max-width:900px){ .review-list{grid-template-columns:1fr} }
-    .review{background:#fff;padding:12px;border-radius:10px;color:#07203a;box-shadow:0 8px 24px rgba(2,8,20,0.06);font-size:13px}
-
-    /* Google Sites embedding friendliness: avoid fixed position, use relative layouts and no external fonts. */
-  </style>
+    </script>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <div class="brand">
-        <div class="logo">SVG</div>
-        <div class="title">
-          <h1>SVG Laser Cut Files</h1>
-          <p>High-quality ready-to-cut SVGs • Mobile-first previews</p>
-        </div>
-      </div>
-      <div class="cta-top">
-        <a class="btn-primary" href="https://www.creativefabrica.com/search/ref/12263094/?query=Laser%20Cut%20Files&campaign=SvgFreeFiles">Start Free SVG Download</a>
-      </div>
-    </header>
-
-    <section class="hero" aria-label="Hero">
-      <div class="hero-left">
-        <h2>Free Laser Cut Files & SVG Templates – 77,000+ Designs</h2>
-        <p>Instant previews with image carousels per item. Use arrows, click or swipe to browse images.</p>
-      </div>
-    </section>
-
-    <main id="catalog" class="grid" aria-live="polite">
-
-      
-      <!-- Card 1: description provided inline via data-desc (preferred) -->
-      <article class="card" data-desc="This digital download includes a bundle of nine spooky and stunning 3D Halloween pumpkin designs, perfect for creating festive decor with a laser cutter. Each intricate multi-layered design features a unique Halloween scene, from haunted houses and graveyards to witches, werewolves, and a variety of mischievous ghosts and pumpkins. The files are designed for easy assembly, creating a beautiful shadow box effect that’s perfect for adding a festive touch to your decor. This is an ideal project for crafters and a wonderful unique gift for the holiday season. What’s included: nine unique 3D layered Halloween pumpkin designs. Files optimized for laser cutting with clear cut and engrave lines. Designs compatible with 3mm material thickness (as indicated by the “3MM” on the image). File formats included: SVG — the most popular vector file format for laser cutting machines, ensuring clean and precise cuts. DWG — a common format for 2D and 3D drawings, compatible with many laser cutting and CAD software programs. PNG — high-resolution files with a transparent background, useful for mockups and previews. AI — Adobe Illustrator files that are fully editable, allowing for easy customization of size and details. PDF — a universal format for high-quality printing and viewing. EPS — a versatile vector file, compatible with various design programs. Creative uses: home decor — create eye-catching centerpieces for a mantel, table, or windowsill. Gifts — a perfect handmade gift for Halloween, for friends, or family. Shop products — sell the finished physical products at craft fairs, online, or in your own store. Party decor — use as unique decorations for a Halloween party or a haunted house event. These files are designed for a smooth crafting experience, making it easy to create a professional-looking Halloween decoration right from your workshop." data-download-url="https://www.creativefabrica.com/product/3d-halloween-pumpkin-bundle-laser-cut-2/ref/12263094/?sharedfrom=pdp" aria-label="Card Welcome Sign Pumpkin">
-        <div class="card-media">
-          <div class="badge">Popular</div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/09/14/3D-Halloween-Pumpkin-Bundle-Laser-Cut-Laser-Cutting-130741767-7-580x387.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track" role="list"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators" role="tablist"></div>
-          </div>
-        </div>
-
-        <div class="card-body">
-          <div class="meta"><span>3D Halloween Pumpkin Bundle - Laser Cut</span><span>SVG #1287</span></div>
-          <h3 class="name">About 3D Halloween Pumpkin Bundle - Laser Cut</h3>
-          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$2.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download" aria-label="Download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 2 -->
-      <article class="card" data-desc="Files Svg Sea Bottle Laser Cut and layered svg laser file. It is laser cut files are digital files that are used to create designs or patterns using a laser cutter machine! SET of 3. This collection offers a variety of designs that transform ordinary bottles into stunning sea-themed creations. Compatible with popular laser cutting machines, these files empower you to craft beautiful and functional sea creature sculptures and decorative accents. After payment, you will be able to download the .zip file of this product in .AI, .SVG, .DXF, .DWG, .CDR, .EPS, .PDF formats. Please unzip the folder before using the files. ABOUT THE FINISHED PRODUCT: Sea Bottle multilayer design (each finished product): 16 x 7 in. Number of layers: 6. Recommended materials – Plywood, MDF, Acrylic, Plexiglas, Wood. You can increase the size of the design, but when reducing it, consider thin elements. Each layer of the multilayer model is glued; paint before gluing. bottle laser cut | files svg sea | files svg bottle | layered svg files | layered svg laser | laser cuttable files | lazer cut files. THANK YOU & ENJOY!
-" data-download-url="https://www.creativefabrica.com/product/sea-bottle-bundle-multilayer-decoration/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge">Popular</div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/07/31/Sea-Bottle-Bundle-Multilayer-Decoration-Graphics-102919777-1-1-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/07/31/Sea-Bottle-Bundle-Multilayer-Decoration-Graphics-102919777-2-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/07/31/Sea-Bottle-Bundle-Multilayer-Decoration-Graphics-102919777-3-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/07/31/Sea-Bottle-Bundle-Multilayer-Decoration-Graphics-102919777-4-580x386.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Sea Bottle Bundle Multilayer Decoration</span><span>SVG #4421</span></div>
-          <h3 class="name">About Sea Bottle Bundle Multilayer Decoration</h3>
-          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$4.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 3 -->
-      <article class="card" data-desc="The thickness of the wood is 3mm. Please note that the size of the product should not be changed as it will cause misalignment in the joints. This download includes a zip folder with unique designs available in multiple formats such as SVG, DXF, EPS, PDF, and DWG. These files are widely compatible with popular cutting machines and design software, ensuring seamless integration into a variety of creative projects. Whether you’re creating unique home decor, crafting custom stationery, adding personalized touches to textiles, or producing bold designs for clothing, packaging, or paper crafts, these versatile designs are perfect for any project. They cater to both hobbyists and professionals alike. Explore the unlimited creative opportunities these designs offer — from custom gifts to modern decor, the possibilities are boundless, allowing you to bring your ideas to life!" data-download-url="https://www.creativefabrica.com/product/love-lantern-laser-cut-design/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge">Popular</div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/12/13/Love-Lantern-Laser-Cut-Design-Graphics-111860548-1-1-580x387.png">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Love Lantern Laser Cut Design</span><span>SVG #993</span></div>
-          <h3 class="name">About Love Lantern Laser Cut Design</h3>
-          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$1.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 4 -->
-      <article class="card" data-desc="The thickness of the wood is 3mm. Please note that the size of the product should not be changed as it will cause misalignment in the joints. This download includes a zip folder with unique designs available in multiple formats such as SVG, DXF, EPS, PDF, and DWG. These files are widely compatible with popular cutting machines and design software, ensuring seamless integration into a variety of creative projects. Whether you’re creating unique home decor, crafting custom stationery, adding personalized touches to textiles, or producing bold designs for clothing, packaging, or paper crafts, these versatile designs are perfect for any project. They cater to both hobbyists and professionals alike. Explore the unlimited creative opportunities these designs offer, from custom gifts to modern decor — the possibilities are boundless, allowing you to bring your ideas to life!" data-download-url="https://www.creativefabrica.com/product/festive-snowman-christmas-lantern/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge">New</div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/10/30/Festive-Snowman-Christmas-Lantern-Graphics-108902723-1-1-580x387.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Festive Snowman Christmas Lantern</span><span>SVG #2206</span></div>
-          <h3 class="name">About Festive Snowman Christmas Lantern</h3>
-          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$2.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-       <!-- Card 5 -->
-      <article class="card" data-desc="Nature Frame SVG Bundle Collection can be used in a wide variety of creative and commercial projects. Here are some of the most popular applications: What’s included: 10 EPS files, 10 set SVG files, 10 set PNG files, 10 set JPG files. Crafting and DIY projects: Cricut and Silhouette designs for vinyl cutting, paper crafting, and card making. Scrapbooking for digital or printed embellishments. Wood signs for laser cutting, engraving, or stenciling. T-shirt and apparel design for screen printing or heat transfer vinyl. Nature SVG, forest frame, floral border, SVG bundle, Cricut design, Silhouette cut file, wildflowers SVG, woodland frame, outdoor decor, vector frame, botanical SVG, nature clipart, printable frame, tree silhouette, wild animal SVG, grass border, rustic SVG, woodland SVG, natural elements, digital download, laser cut SVG, SVG for signs, wildlife SVG, deer SVG, floral SVG, SVG template, garden frame, SVG overlay, frame SVG, nature scene, greenery SVG, outdoor SVG, woodland animals, SVG for crafters, SVG for shirts, SVG for cards, SVG cut file, EPS frame, PNG frame, SVG for printing, Silhouette design, SVG artwork." data-download-url="https://www.creativefabrica.com/product/nature-frame-svg-bundle-collection-5/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge">New</div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-1-1-580x388.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/31/Nature-Frame-SVG-Bundle-Collection-Graphics-123172301-9-580x387.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Nature Frame SVG Bundle Collection</span><span>SVG #208</span></div>
-          <h3 class="name">About Nature Frame SVG Bundle Collection Graphic</h3>
-          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$2.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-      
-      <!-- Card 6 -->
-      <article class="card" data-desc="Discover the grace and freedom of nature with this Elegant Bird Silhouette Design Bundle, perfect for your next creative project. This collection includes 12 high-quality bird silhouette designs available in SVG, PNG, JPG, and EPS formats, making them ideal for Cricut projects, t-shirt printing, home décor, scrapbooking, card making, laser cutting, and more. Each design showcases the unique beauty of birds in flight and perched positions, capturing a timeless aesthetic that fits both modern and rustic styles. These files are fully scalable and easy to use with popular cutting machines and graphic design software. Whether you’re a crafter, designer, or small business owner, this versatile bundle is a must-have addition to your digital library. 12 EPS files, 12 JPG files, 12 SVG files, 12 PNG files. These digital clip art files can be used for the following: easy to modify and change color, made with 100% vector shapes, fully editable vector EPS. The files are compressed in one ZIP file; you need to extract them using WinZIP, WinRAR, or similar software, or directly double-click and extract them. Thank you." data-download-url="https://www.creativefabrica.com/product/bird-silhouette-design-bundle-19/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge">Popular</div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-9-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-10-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-11-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-12-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/26/Bird-Silhouette-design-bundle-Graphics-127021739-13-580x387.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Bird Silhouette Design Bundle</span><span>SVG #5258</span></div>
-          <h3 class="name">About Bird Silhouette Design Bundle Graphic</h3>
-          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$17.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 7 -->
-      <article class="card" data-desc="Create stunning holiday accessories with this Christmas Custom Ornament Earrings Line Art Bundle. This collection features 39 unique designs of intricate ornament earrings, perfect for adding a festive touch to your seasonal projects. Each design is provided in SVG, EPS, AI, and DXF formats, ensuring compatibility with popular cutting machines like Cricut and Silhouette. Features: 39 unique Christmas ornament earring designs. File formats included: SVG, EPS, AI, DXF. Perfect for DIY jewelry, holiday gifts, and craft projects. Compatible with Cricut, Silhouette, Glowforge, and other laser cutters. High-quality line art — clean, detailed, and ready to cut. Usage ideas: create custom earrings for Christmas parties and gifts, design festive jewelry for holiday markets or personal use, add charm to DIY projects and handmade crafts. Whether you’re a professional crafter or just starting, this bundle is your go-to solution for creating timeless, festive designs. Terms of use: for personal and small commercial use. Reselling or redistributing the files is prohibited. Add a festive sparkle to your holiday crafts with this versatile bundle." data-download-url="https://www.creativefabrica.com/product/christmas-ornament-earrings-bundle/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge"></div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/11/12/Christmas-Ornament-Earrings-bundle-Graphics-109769196-1-1-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/11/12/Christmas-Ornament-Earrings-bundle-Graphics-109769196-2-580x386.jpg, ">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Christmas Ornament Earrings Bundle</span><span>SVG #225</span></div>
-          <h3 class="name">About Christmas Ornament Earrings Bundle Graphic</h3>
-          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$3.90</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 8 -->
-      <article class="card" data-desc="ChatGPT сказал:
-
-Mix and match your favorite dog breed with one of 12 unique quotes. There are 75 dog breeds and 12 quotes in this Bookmark SVG Bundle. To use it, open the Quotes XCS files, choose the one you need, click, copy, and paste it onto the dog bookmark of your choice. Each quote will fit perfectly on every dog breed bookmark. The size is approximately 1.8″ x 6″, and the ribbon hole is a rounded rectangle measuring 6.5mm x 6.5mm. File formats available: SVG and XCS. List of dog breed bookmarks: Airedale Terrier, Akita Inu, Alaskan Malamute, Basenji, Bassethound, Beagle, Belgian Malinois, Bernese Mountain, Bichon Frise, Biewer Terrier, Black Labs, Bloodhound, Blue Heeler, Border Collie, Borzoi, Boston Terrier, Boxer, Bulldog, Cairn Terrier, Cane Corso, Cavalier King Charles, Chihuahua, Chinese Crested, Chow Chow, Cocker Spaniel, Cockerpoo, Corgi, Dachshund, Dalmatian, Dobermann, Dutch Shepherd, English Bull Terrier, English Mastiff, English Setter, French Bulldog, German Shepherd, German Spitz, Golden Retriever, Golden Doodle, Great Dane, Great Pyrenees, Greyhound, Havanese, Jack Russell Terrier, Komondor, Labrador, Lhasa Apso, Maltese, Mini Pinscher, Newfoundland, Old English Sheepdog, Papillon, Pekingese, Pitbull Terrier, Pomeranian, Pug, Rhodesian Ridgeback, Rottweiler, Rough Collie, Saint Bernard, Samoyed, Schnauzer, Sharpei, Shiba Inu, Shih Tzu, Siberian Husky, Staffordshire Bull, Standard Poodle, Toy Poodle, Vizsla, Walker Hound, Weimaraner, West Highland Terrier, Whippet, Yorkshire Terrier." data-download-url="https://www.creativefabrica.com/product/dog-bookmarks-with-quote-laser-cut-files/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge"></div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-1-1-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-2-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-3-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-4-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-5-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-6-580x386.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/07/11/Dog-Bookmarks-With-Quote-Laser-Cut-Files-Laser-Cutting-125948164-7-580x386.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Dog Bookmarks with Quote Laser Cut Files</span><span>SVG #3589</span></div>
-          <h3 class="name">About Dog Bookmarks with Quote Laser Cut Files</h3>
-          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$4.99</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 9 -->
-
-      <article class="card" data-desc="This is a collection of laser-cut ready files for creating stylish and unique handbags from plywood or MDF. Each design allows you to craft a beautiful, one-of-a-kind accessory with intricate details and an original shape. These files are perfect for DIY enthusiasts, fashion creators, or anyone looking to produce high-quality, handcrafted wooden bags. Easily assembled after cutting, these bags make a wonderful addition to any wardrobe or a thoughtful, personalized gift. About the finished product: clutch size (finished product) — 8 x 9 x 3 inches, with the largest piece measuring 8 x 18.3 inches. Recommended materials include plywood, MDF, acrylic, and wood. Design is for 3mm thickness. For your convenience, the downloadable zip folder contains files in multiple formats: AI, SVG, DXF, DWG, CDR, EPS, and PDF." data-download-url="https://www.creativefabrica.com/product/set-of-3-laser-cut-wooden-bag/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge">New</div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-2-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-9-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2025/05/22/Set-of-3-Laser-Cut-Wooden-Bag-Graphics-122623968-10-580x387.jpg, ">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Set of 3 Laser Cut Wooden Bag</span><span>SVG #2299</span></div>
-          <h3 class="name">About Set of 3 Laser Cut Wooden Bag</h3>
-          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$10.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-
-      <!-- Card 10 -->
-
-      <article class="card" data-desc="Santa Mail Boxes Laser Cut Bundle. Please note: this is a digital product, no physical product will be sent — photos are for inspiration purposes only. Your purchase will include a zip folder with five designs in SVG, DXF, EPS, PDF, JPG, and PNG file formats. Material width required for this project is 3mm. You can use these designs to create home decor, stationery, textiles, tableware, prints for fashionable clothes, paper crafts, packaging, and many other creative projects. The creation options are endless. Thank you for visiting my shop. Please write me a message if you have any questions. Enjoy." data-download-url="https://www.creativefabrica.com/product/santa-mail-boxes-laser-cut-bundle/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge">New</div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-9-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-10-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-11-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/09/26/Santa-Mail-Boxes-Laser-Cut-Bundle-Graphics-106599370-12-580x387.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Santa Mail Boxes Laser Cut Bundle</span><span>SVG #6586</span></div>
-          <h3 class="name">About Santa Mail Boxes Laser Cut Bundle</h3>
-          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$3.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-
-      <!-- Card 11 -->
-
-      <article class="card" data-desc="Christmas House Laser Cut SVG Set 01. Christmas Houses Set 1 includes six styles of laser cut files, perfect for Glowforge, CNC, or other cutting machines. These designs can be used to create nightlights, holiday decorations, or thoughtful Christmas gifts. Dimensions: 140 x 98 x 98 mm. Recommended materials: plywood, MDF, acrylic, plexiglass, metal, cardboard, or paper. Recommended wood thickness: 1/12″ (3mm). You will receive vector and image files in multiple formats — EPS, SVG, DXF, AI, PNG, JPG, and PDF. The design can be scaled as needed." data-download-url="https://www.creativefabrica.com/product/christmas-house-laser-cut-svg-set01/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge"></div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2023/10/20/Christmas-House-Laser-Cut-SVG-Set01-Graphics-82093150-1-1-580x395.jpg, https://www.creativefabrica.com/wp-content/uploads/2023/10/20/Christmas-House-Laser-Cut-SVG-Set01-Graphics-82093150-2-580x395.jpg, https://www.creativefabrica.com/wp-content/uploads/2023/10/20/Christmas-House-Laser-Cut-SVG-Set01-Graphics-82093150-3-580x395.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Christmas House Laser Cut SVG Set01</span><span>SVG #2911</span></div>
-          <h3 class="name">About Christmas House Laser Cut SVG Set01</h3>
-          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$2.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-
-      <!-- Card 12 -->
-
-      <article class="card" data-desc="PUZZLE is a multilayer layout and a creative design for your ideas. PUZZLE digital multilayer layout files are specially prepared for laser cutters, CNC router machines, and other cutting devices. The Puzzle Wall Art is laser-cut from MDF wood, giving it an elegant appearance that fits perfectly into a variety of décor styles. Wood wall art is becoming one of the most popular forms of modern home decoration. This wall art set makes a thoughtful housewarming gift and a stylish interior accent. After payment, you will be able to download a ZIP file containing the product in AI, SVG, DXF, DWG, CDR, EPS, and PDF formats. Please unzip the folder before using the files. About the finished product: PUZZLE multilayer layout size (finished product) — 44 x 25 inches. Number of layers — 6. Recommended materials — plywood, MDF, acrylic, plexiglass, metal, cardboard, paper. Recommended material thickness — 3–6 mm (1/12 in – 1/4 in). You can increase the size of the design, but when reducing it, consider the thin elements. Each layer of the multilayer model should be glued; paint before gluing. Layered laser cut, laser cut files, laser cut wall art, laser cut SVG, wall panel laser cut, laser cutting, laser art, wood laser cut, laser cut panel, laser engraved, ornament SVG, Glowforge SVG, mandala SVG. Thank you and enjoy." data-download-url="https://www.creativefabrica.com/product/puzzle-multilayer-laser-cut-files/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge">Popular</div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2021/05/31/PUZZLE-Multilayer-Laser-Cut-Files-Graphics-12688805-6-580x387.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Puzzle Multilayer Laser Cut Filesr</span><span>SVG #101</span></div>
-          <h3 class="name">About Puzzle Multilayer Laser Cut Files</h3>
-          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$4.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-
-      <!-- Card 13 -->
-
-      <article class="card" data-desc="Spread the holiday cheer with our festive Advent Calendar laser cut file. This beautifully designed calendar adds a touch of magic to the countdown to Christmas. Each numbered compartment holds a delightful surprise, making it a perfect way to build excitement and anticipation. Each individual house in the assembled advent calendar measures 2.76 x 2.95 x 2.6 inches (70 x 75 x 65 mm). The overall size of the completed calendar will depend on your chosen arrangement — you can line the houses up, form a tree shape, place them on the included stand, or create any other configuration you prefer. This design is made for 3mm material thickness. Choose from a variety of materials to match your desired aesthetic, such as plywood, MDF, acrylic, or others. Once you’ve selected your material, simply import the digital file (available in AI, SVG, DXF, DWG, CDR, EPS, and PDF formats) into your preferred design software for easy customization.
-" data-download-url="https://www.creativefabrica.com/product/days-until-christmas-advent-calendar/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge"></div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-4-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2024/10/21/Days-Until-Christmas-Advent-Calendar-Graphics-108348407-9-580x387.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Days Until Christmas Advent Calendar</span><span>SVG #22</span></div>
-          <h3 class="name">About Days Until Christmas Advent Calendar</h3>
-          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$3.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-
-
-      <!-- Card 14 -->
-
-      <article class="card" data-desc="Set of 7: Laser Cut File Calendar Clock DXF Cutting File and Laser Cut Watch Files. This multilayer layout is a creative design for your ideas. Wall Calendar Clock digital multilayer layout files are specially prepared for laser cutters, CNC router machines, and other cutting devices. Explore this laser cut wall clock design for a unique or custom handmade décor piece from the LaserCutano shop. You can create seven variations of wall calendars combined with clocks. Using quality materials gives you the opportunity to produce fresh and creative designs. The design includes five layers, but you can add or remove layers depending on the size of your clock mechanism. After payment, you will be able to download a ZIP file containing the product in AI, SVG, DXF, DWG, CDR, EPS, and PDF formats. Please unzip the folder before using the files." data-download-url="https://www.creativefabrica.com/product/perpetual-calendar-clock-set-of-7/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge"></div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-5-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-6-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-7-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-8-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-9-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/12/23/PERPETUAL-CALENDAR-CLOCK-SET-OF-7-Graphics-54108251-10-580x387.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>PERPETUAL CALENDAR & CLOCK SET of 7</span><span>SVG #5923</span></div>
-          <h3 class="name">About PERPETUAL CALENDAR & CLOCK SET of 7</h3>
-          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$6.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-
-
-      <!-- Card 15 -->
-
-      <article class="card" data-desc="Bring your creative vision to life with our Book Nook kit, which includes DXF, SVG, and JPG files. What’s included: DXF and SVG files for laser cutting, providing detailed designs for clean, professional results, and JPG files for easy printing and manual cutting with scissors. If you prefer to use a laser cutter, these files are optimized for precise and accurate laser cuts. Important notes: colors may vary depending on the printer and materials you use, so feel free to experiment for the best results. You can use battery-operated or electric LEDs for lighting. Glue is required for assembling the model." data-download-url="https://www.creativefabrica.com/product/pub-book-nook-laser-cut-svg-dxf-jpg/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge">a hit of sales</div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/09/23/Pub-Book-Nook-Laser-Cut-Svg-Dxf-Jpg-Laser-Cutting-131403583-1-1-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/09/23/Pub-Book-Nook-Laser-Cut-Svg-Dxf-Jpg-Laser-Cutting-131403583-2-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/09/23/Pub-Book-Nook-Laser-Cut-Svg-Dxf-Jpg-Laser-Cutting-131403583-3-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/09/23/Pub-Book-Nook-Laser-Cut-Svg-Dxf-Jpg-Laser-Cutting-131403583-4-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/09/23/Pub-Book-Nook-Laser-Cut-Svg-Dxf-Jpg-Laser-Cutting-131403583-5-580x387.png, ">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Pub Book Nook: Laser Cut Svg - Dxf - Jpg</span><span>SVG #3651</span></div>
-          <h3 class="name">About Pub Book Nook: Laser Cut Svg - Dxf - Jpg</h3>
-          <div class="desc-box" data-max-chars="500"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$15.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-
-      <!-- Card 16 -->
-
-      <article class="card" data-desc="Paw Keychain with gluing template – Pet Name, Digital File, Custom Pet Paw Name Keychain, available in SVG, PDF, LBRN2, and DXF formats, compatible with Lightburn and Glowforge. This is a digital file designed for laser cutting and Glowforge machines. The vector file has been fully tested and is ready for use. After purchasing and downloading, you can create your own personalized keychains for personal use or sell the finished products to clients as part of your business.
-" data-download-url="https://www.creativefabrica.com/product/dog-paw-keychain-with-gluing-template/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge"></div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/03/02/Dog-Paw-Keychain-with-gluing-template-Graphics-117111266-1-1-580x387.png, https://www.creativefabrica.com/wp-content/uploads/2025/03/02/Dog-Paw-Keychain-with-gluing-template-Graphics-117111266-2-580x387.png, ">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Dog Paw Keychain with Gluing Template</span><span>SVG #68691</span></div>
-          <h3 class="name">About Dog Paw Keychain with Gluing Template</h3>
-          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$1.60</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-
-      <!-- Card 17 -->
-
-      <article class="card" data-desc="Paw Keychain with gluing template – Pet Name, Digital File, Custom Pet Paw Name Keychain, available in SVG, PDF, LBRN2, and DXF formats, compatible with Lightburn and Glowforge. This digital file is designed for laser cutting and Glowforge machines. The vector file is fully tested and ready for use. After purchasing and downloading, you can easily create personalized keychains for yourself or offer the finished products for sale to clients as part of your business.
-" data-download-url="https://www.creativefabrica.com/product/birman-cat-personalized-keychain/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge"></div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2025/05/18/Birman-Cat-Personalized-Keychain-Graphics-122315373-1-1-580x387.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Birman Cat Personalized Keychain</span><span>SVG #2201</span></div>
-          <h3 class="name">About Birman Cat Personalized Keychain</h3>
-          <div class="desc-box" data-max-chars="300"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$1.00</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-
-      <!-- Card 18 -->
-
-      <article class="card" data-desc="Hamster House – Laser Cut Template, compatible with 3 mm, 4 mm, and 1/8 inch material thickness. This digital vector model is perfect for laser cutting or CNC projects. The design includes detailed patterns for creating a miniature hamster house.📦 Instant Download No physical item will be shipped.🧩 File Formats Included: DXF, DWG, CDR, SVG 📐 Dimensions: Length: 121 mm Width: 84 mm Height: 86 mm These files are fully compatible with all major laser cutting software. If you have any questions or encounter any issues, please feel free to reach out — support is always available." data-download-url="https://www.creativefabrica.com/product/plywood-hamster-house-laser-cut/ref/12263094/?sharedfrom=pdp">
-        <div class="card-media">
-          <div class="badge">New</div>
-          <div class="carousel" data-images="https://www.creativefabrica.com/wp-content/uploads/2022/05/26/Plywood-Hamster-House-Laser-Cut-Graphics-31210214-1-1-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/05/26/Plywood-Hamster-House-Laser-Cut-Graphics-31210214-2-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/05/26/Plywood-Hamster-House-Laser-Cut-Graphics-31210214-3-580x387.jpg, https://www.creativefabrica.com/wp-content/uploads/2022/05/26/Plywood-Hamster-House-Laser-Cut-Graphics-31210214-4-580x387.jpg">
-            <button class="arrow left" aria-label="previous">‹</button>
-            <div class="carousel-track"></div>
-            <button class="arrow right" aria-label="next">›</button>
-            <div class="indicators"></div>
-          </div>
-        </div>
-        <div class="card-body">
-          <div class="meta"><span>Plywood Hamster House Laser Cut</span><span>SVG #2201</span></div>
-          <h3 class="name">About Plywood Hamster House Laser Cut</h3>
-          <div class="desc-box" data-max-chars="600"><p>Loading description…</p></div>
-          <div class="price-row">
-            <div class="price">$1.75</div>
-            <div class="btn-row">
-              <button class="btn-small btn-download">Download Free</button>
-            </div>
-          </div>
-        </div>
-      </article>
-    </main>
-
-    
-
-    <div class="center-cta">
-      <a class="btn-primary" href="https://www.creativefabrica.com/search/ref/12263094/?query=Popular%20Laser%20Cutting%20Files&page=61&campaign=laserCutFreeMasch">Start Free SVG Download</a>
+    <!-- Urgency Banner -->
+    <div class="urgency-banner">
+        🔥 FLASH SALE: Up to 70% OFF - Limited Time Only! 🔥
     </div>
-
-    <section class="reviews" aria-label="Customer reviews">
-      <h3 style="margin:0 0 12px;color:#fff">What Our Artisans Say</h3>
-      <div class="review-list">
-        <div class="review"><b>Anna P.</b> Fast download, clean vectors. The layered mandala assembled quickly and looks premium.</div>
-        <div class="review"><b>Marco D.</b> Kerf guidance saved me material. Files are professional and ready for production.</div>
-        <div class="review"><b>Rina S.</b> Clear licensing and excellent results for custom lamp projects.</div>
-      </div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="header-logo">✨ Bae Moments</div>
+        <p class="header-tagline">Your Destination for 2026's Hottest Formal Dresses</p>
+        <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="header-cta" onclick="trackClick('header_cta')">Shop Now</a>
+    </header>
+    
+    <!-- Navigation Categories -->
+    <nav class="nav-categories">
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#prom" onclick="trackClick('nav_prom')">Prom Dresses</a></li>
+            <li class="nav-item"><a href="#wedding-guest" onclick="trackClick('nav_wedding')">Wedding Guest</a></li>
+            <li class="nav-item"><a href="#bridesmaid" onclick="trackClick('nav_bridesmaid')">Bridesmaid</a></li>
+            <li class="nav-item"><a href="#gala" onclick="trackClick('nav_gala')">Gala Dresses</a></li>
+            <li class="nav-item"><a href="#red-carpet" onclick="trackClick('nav_redcarpet')">Red Carpet</a></li>
+            <li class="nav-item"><a href="#birthday" onclick="trackClick('nav_birthday')">Birthday</a></li>
+            <li class="nav-item"><a href="#graduation" onclick="trackClick('nav_graduation')">Graduation</a></li>
+        </ul>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        
+        <!-- Prom Dresses Section -->
+        <section id="prom" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Prom Dresses 2026</h2>
+                <p class="section-subtitle">Stunning gowns for your unforgettable night</p>
+            </div>
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('prom_1')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1d63f402f-8212-4425-afa9-fa89c3503938.png" alt="Red Ballgown Prom Dress with Beaded Bodice" class="product-image" loading="lazy">
+                        <span class="product-badge">Bestseller</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Prom Dresses</p>
+                        <h3 class="product-name">Red Ballgown Prom Dress with Beaded Bodice</h3>
+                        <p class="product-price">$189.99 <span class="original">$379.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 2 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('prom_2')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/17c220b7e-78be-46c0-b8ca-e4cf303888e3.png" alt="Black Sequin Mermaid Prom Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Trending</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Prom Dresses</p>
+                        <h3 class="product-name">Black Sequin Mermaid Prom Dress</h3>
+                        <p class="product-price">$219.99 <span class="original">$439.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 3 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('prom_3')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1c0d48266-8a1d-46e8-b43d-5589d84efea1.png" alt="White Lace A-Line Prom Dress" class="product-image" loading="lazy">
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Prom Dresses</p>
+                        <h3 class="product-name">White Lace A-Line Prom Dress</h3>
+                        <p class="product-price">$169.99 <span class="original">$339.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 4 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('prom_4')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/193753c2d-012a-48b6-b521-3ddb72be367f.png" alt="Emerald Green Two-Piece Prom Set" class="product-image" loading="lazy">
+                        <span class="product-badge">New</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Prom Dresses</p>
+                        <h3 class="product-name">Emerald Green Two-Piece Prom Set</h3>
+                        <p class="product-price">$149.99 <span class="original">$299.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 5 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('prom_5')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1981a8aef-7839-4ace-944a-36c9b90b843d.png" alt="Champagne Gold Long Sleeve Prom Dress" class="product-image" loading="lazy">
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Prom Dresses</p>
+                        <h3 class="product-name">Champagne Gold Long Sleeve Prom Dress</h3>
+                        <p class="product-price">$199.99 <span class="original">$399.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 6 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('prom_6')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1c4534fc6-cb28-4c5d-a97a-70099177af3c.png" alt="Burgundy One Shoulder Prom Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Sale</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Prom Dresses</p>
+                        <h3 class="product-name">Burgundy One Shoulder Prom Dress</h3>
+                        <p class="product-price">$159.99 <span class="original">$319.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 7 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('prom_7')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/184e6785f-e679-4122-91a3-72b3a4f3d0c8.png" alt="Blush Pink Sparkle Ballgown Prom Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Popular</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Prom Dresses</p>
+                        <h3 class="product-name">Blush Pink Sparkle Ballgown Prom Dress</h3>
+                        <p class="product-price">$229.99 <span class="original">$459.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 8 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('prom_8')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1e7a3c941-6bb0-4094-8b86-ed9773063be9.png" alt="Navy Blue Beaded Mermaid Prom Dress" class="product-image" loading="lazy">
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Prom Dresses</p>
+                        <h3 class="product-name">Navy Blue Beaded Mermaid Prom Dress</h3>
+                        <p class="product-price">$209.99 <span class="original">$419.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Wedding Guest Section -->
+        <section id="wedding-guest" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Wedding Guest Dresses</h2>
+                <p class="section-subtitle">Elegant outfits for every wedding celebration</p>
+            </div>
+            <div class="product-grid">
+                <!-- Product 9 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('wedding_1')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/16c997e07-5724-4cdd-91c9-8411bc3ebf4d.png" alt="Floral Midi Wedding Guest Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Bestseller</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Wedding Guest</p>
+                        <h3 class="product-name">Floral Midi Wedding Guest Dress with Lace</h3>
+                        <p class="product-price">$129.99 <span class="original">$259.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 10 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('wedding_2')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1ca550df5-74d6-4c95-8b9e-8cdc80027207.png" alt="Sage Green Maxi Wedding Guest Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Trending</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Wedding Guest</p>
+                        <h3 class="product-name">Sage Green Maxi Wedding Guest Dress</h3>
+                        <p class="product-price">$149.99 <span class="original">$299.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 11 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('wedding_3')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/14bcffa47-5ec9-4847-9ccc-a3775d07a4de.png" alt="Burgundy Satin Off-Shoulder Wedding Dress" class="product-image" loading="lazy">
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Wedding Guest</p>
+                        <h3 class="product-name">Burgundy Satin Off-Shoulder Wedding Dress</h3>
+                        <p class="product-price">$139.99 <span class="original">$279.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 12 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('wedding_4')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/12cec6f78-d44b-4bf5-a2d7-e29d97b1211b.png" alt="Navy Blue Lace Cocktail Wedding Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">New</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Wedding Guest</p>
+                        <h3 class="product-name">Navy Blue Lace Cocktail Wedding Dress</h3>
+                        <p class="product-price">$119.99 <span class="original">$239.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 13 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('wedding_5')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1d5bed638-69ca-4065-b4d2-1ed9c3ac66eb.png" alt="Blush Pink Chiffon Maxi Wedding Dress" class="product-image" loading="lazy">
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Wedding Guest</p>
+                        <h3 class="product-name">Blush Pink Chiffon Maxi Wedding Dress</h3>
+                        <p class="product-price">$159.99 <span class="original">$319.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 14 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('wedding_6')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1ea26b26e-a007-4683-9ccf-b0dde100e185.png" alt="Cream Elegant Wedding Guest Jumpsuit" class="product-image" loading="lazy">
+                        <span class="product-badge">Unique</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Wedding Guest</p>
+                        <h3 class="product-name">Cream Elegant Wedding Guest Jumpsuit</h3>
+                        <p class="product-price">$139.99 <span class="original">$279.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 15 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('wedding_7')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/179c41244-b3b6-4fcb-9700-1f32aa67b4b0.png" alt="Terracotta Velvet Wrap Wedding Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Fall Favorite</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Wedding Guest</p>
+                        <h3 class="product-name">Terracotta Velvet Wrap Wedding Dress</h3>
+                        <p class="product-price">$149.99 <span class="original">$299.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 16 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('wedding_8')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/19d6b3e76-0ba7-4b40-9653-8f87480bf2b4.png" alt="Silver Metallic Cocktail Wedding Dress" class="product-image" loading="lazy">
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Wedding Guest</p>
+                        <h3 class="product-name">Silver Metallic Cocktail Wedding Dress</h3>
+                        <p class="product-price">$169.99 <span class="original">$339.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Bridesmaid Section -->
+        <section id="bridesmaid" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Bridesmaid Dresses</h2>
+                <p class="section-subtitle">Beautiful dresses for your bridal party</p>
+            </div>
+            <div class="product-grid">
+                <!-- Product 17 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('bridesmaid_1')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/171826d0f-fac5-46c1-8469-693c71a41aa2.png" alt="Dusty Rose Chiffon Bridesmaid Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Bestseller</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Bridesmaid</p>
+                        <h3 class="product-name">Dusty Rose Chiffon Bridesmaid Dress</h3>
+                        <p class="product-price">$99.99 <span class="original">$199.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 18 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('bridesmaid_2')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1732fa9fc-4772-4249-9d6c-4144ddba9680.png" alt="Sage Green One Shoulder Bridesmaid Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Trending</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Bridesmaid</p>
+                        <h3 class="product-name">Sage Green One Shoulder Bridesmaid Dress</h3>
+                        <p class="product-price">$109.99 <span class="original">$219.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 19 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('bridesmaid_3')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/140cb0f8b-2e92-4161-8698-685a82f31aa6.png" alt="Blush Pink Tulle Bridesmaid Dress" class="product-image" loading="lazy">
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Bridesmaid</p>
+                        <h3 class="product-name">Blush Pink Tulle Bridesmaid Dress</h3>
+                        <p class="product-price">$119.99 <span class="original">$239.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 20 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('bridesmaid_4')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/117a3745f-c4ec-46a3-bced-fd4dc7ba16a4.png" alt="Terracotta Wrap Bridesmaid Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">New</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Bridesmaid</p>
+                        <h3 class="product-name">Terracotta Wrap Bridesmaid Dress</h3>
+                        <p class="product-price">$89.99 <span class="original">$179.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 21 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('bridesmaid_5')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/11018c6ca-3148-466e-90af-581f93253216.png" alt="Ice Blue Chiffon Bridesmaid Dress" class="product-image" loading="lazy">
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Bridesmaid</p>
+                        <h3 class="product-name">Ice Blue Chiffon Bridesmaid Dress</h3>
+                        <p class="product-price">$109.99 <span class="original">$219.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 22 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('bridesmaid_6')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1c6244a85-b591-4b8b-af75-d732df91b586.png" alt="Champagne Gold Satin Bridesmaid Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Elegant</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Bridesmaid</p>
+                        <h3 class="product-name">Champagne Gold Satin Bridesmaid Dress</h3>
+                        <p class="product-price">$129.99 <span class="original">$259.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 23 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('bridesmaid_7')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1175c9f32-ad3d-4669-8fc9-a3c8104dc4af.png" alt="Mauve Velvet Strapless Bridesmaid Dress" class="product-image" loading="lazy">
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Bridesmaid</p>
+                        <h3 class="product-name">Mauve Velvet Strapless Bridesmaid Dress</h3>
+                        <p class="product-price">$99.99 <span class="original">$199.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 24 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('bridesmaid_8')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/10d95b1c4-64e2-4ce0-abd9-bbe44b224245.png" alt="Navy Blue Velvet Long Sleeve Bridesmaid Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Winter</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Bridesmaid</p>
+                        <h3 class="product-name">Navy Blue Velvet Long Sleeve Bridesmaid Dress</h3>
+                        <p class="product-price">$119.99 <span class="original">$239.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Gala Dresses Section -->
+        <section id="gala" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Gala Dresses</h2>
+                <p class="section-subtitle">Luxurious gowns for black-tie events</p>
+            </div>
+            <div class="product-grid">
+                <!-- Product 25 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('gala_1')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/181ed880d-d652-4dc3-8c70-4bb6173679df.png" alt="Black Sequin Gala Dress with Fringe" class="product-image" loading="lazy">
+                        <span class="product-badge">Stunning</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Gala Dresses</p>
+                        <h3 class="product-name">Black Sequin Gala Dress with Fringe Detail</h3>
+                        <p class="product-price">$299.99 <span class="original">$599.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 26 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('gala_2')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1991a7fea-48c6-48b7-88d7-65465e9e65db.png" alt="White Satin Long Sleeve Gala Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Elegant</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Gala Dresses</p>
+                        <h3 class="product-name">White Satin Long Sleeve Gala Dress</h3>
+                        <p class="product-price">$279.99 <span class="original">$559.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 27 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('gala_3')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1a073dcd7-807d-4598-a92d-cf40cfa5ff26.png" alt="Red Velvet Asymmetrical Gala Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Dramatic</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Gala Dresses</p>
+                        <h3 class="product-name">Red Velvet Asymmetrical Gala Dress</h3>
+                        <p class="product-price">$259.99 <span class="original">$519.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 28 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('gala_4')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1d3a9db7a-f12a-4eeb-a4e7-7d2c9d29ba6c.png" alt="Gold Metallic Mermaid Gala Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Glamorous</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Gala Dresses</p>
+                        <h3 class="product-name">Gold Metallic Mermaid Gala Dress</h3>
+                        <p class="product-price">$319.99 <span class="original">$639.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 29 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('gala_5')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1b1564611-45b5-472d-9f39-515895b6cea7.png" alt="Teal Velvet One Shoulder Gala Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Pantone 2026</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Gala Dresses</p>
+                        <h3 class="product-name">Teal Velvet One Shoulder Gala Dress</h3>
+                        <p class="product-price">$289.99 <span class="original">$579.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 30 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('gala_6')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1925b6eae-4e90-4826-a3f0-b09a9fb6aad6.png" alt="Silver Beaded V-Neck Gala Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Sparkle</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Gala Dresses</p>
+                        <h3 class="product-name">Silver Beaded V-Neck Gala Dress</h3>
+                        <p class="product-price">$329.99 <span class="original">$659.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 31 - Reused -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('gala_7')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/17c220b7e-78be-46c0-b8ca-e4cf303888e3.png" alt="Black Sequin Column Gala Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Classic</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Gala Dresses</p>
+                        <h3 class="product-name">Black Sequin Column Gala Dress</h3>
+                        <p class="product-price">$249.99 <span class="original">$499.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 32 - Reused -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('gala_8')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1c0d48266-8a1d-46e8-b43d-5589d84efea1.png" alt="White Lace Overlay Gala Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Romantic</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Gala Dresses</p>
+                        <h3 class="product-name">White Lace Overlay Gala Dress</h3>
+                        <p class="product-price">$269.99 <span class="original">$539.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Red Carpet Section -->
+        <section id="red-carpet" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Red Carpet Dresses</h2>
+                <p class="section-subtitle">Award-show worthy glamorous gowns</p>
+            </div>
+            <div class="product-grid">
+                <!-- Product 33 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('redcarpet_1')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/181ed880d-d652-4dc3-8c70-4bb6173679df.png" alt="Black Fringe Red Carpet Gown" class="product-image" loading="lazy">
+                        <span class="product-badge">Oscar Style</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Red Carpet</p>
+                        <h3 class="product-name">Black Fringe Red Carpet Gown</h3>
+                        <p class="product-price">$399.99 <span class="original">$799.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 34 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('redcarpet_2')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1991a7fea-48c6-48b7-88d7-65465e9e65db.png" alt="White Cape Sleeve Red Carpet Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Dramatic</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Red Carpet</p>
+                        <h3 class="product-name">White Cape Sleeve Red Carpet Dress</h3>
+                        <p class="product-price">$379.99 <span class="original">$759.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 35 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('redcarpet_3')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1a073dcd7-807d-4598-a92d-cf40cfa5ff26.png" alt="Red Velvet High-Low Red Carpet Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Bold</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Red Carpet</p>
+                        <h3 class="product-name">Red Velvet High-Low Red Carpet Dress</h3>
+                        <p class="product-price">$349.99 <span class="original">$699.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 36 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('redcarpet_4')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1d3a9db7a-f12a-4eeb-a4e7-7d2c9d29ba6c.png" alt="Gold Beaded Red Carpet Gown" class="product-image" loading="lazy">
+                        <span class="product-badge">Luxury</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Red Carpet</p>
+                        <h3 class="product-name">Gold Beaded Red Carpet Gown</h3>
+                        <p class="product-price">$429.99 <span class="original">$859.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 37 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('redcarpet_5')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1b1564611-45b5-472d-9f39-515895b6cea7.png" alt="Teal Velvet Red Carpet Gown" class="product-image" loading="lazy">
+                        <span class="product-badge">Trending Color</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Red Carpet</p>
+                        <h3 class="product-name">Teal Velvet Red Carpet Gown</h3>
+                        <p class="product-price">$369.99 <span class="original">$739.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 38 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('redcarpet_6')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1925b6eae-4e90-4826-a3f0-b09a9fb6aad6.png" alt="Silver Sequin Red Carpet Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Sparkle</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Red Carpet</p>
+                        <h3 class="product-name">Silver Sequin Red Carpet Dress</h3>
+                        <p class="product-price">$389.99 <span class="original">$779.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 39 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('redcarpet_7')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1d63f402f-8212-4425-afa9-fa89c3503938.png" alt="Red Ballgown Red Carpet Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Statement</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Red Carpet</p>
+                        <h3 class="product-name">Red Ballgown Red Carpet Dress</h3>
+                        <p class="product-price">$449.99 <span class="original">$899.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 40 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('redcarpet_8')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1e7a3c941-6bb0-4094-8b86-ed9773063be9.png" alt="Navy Beaded Red Carpet Gown" class="product-image" loading="lazy">
+                        <span class="product-badge">Elegant</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Red Carpet</p>
+                        <h3 class="product-name">Navy Beaded Red Carpet Gown</h3>
+                        <p class="product-price">$359.99 <span class="original">$719.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Birthday Section -->
+        <section id="birthday" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Birthday Outfits</h2>
+                <p class="section-subtitle">Celebrate in style with party-perfect dresses</p>
+            </div>
+            <div class="product-grid">
+                <!-- Product 41 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('birthday_1')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/193753c2d-012a-48b6-b521-3ddb72be367f.png" alt="Green Two-Piece Birthday Dress Set" class="product-image" loading="lazy">
+                        <span class="product-badge">Party Ready</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Birthday</p>
+                        <h3 class="product-name">Green Two-Piece Birthday Dress Set</h3>
+                        <p class="product-price">$89.99 <span class="original">$179.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 42 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('birthday_2')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/19d6b3e76-0ba7-4b40-9653-8f87480bf2b4.png" alt="Silver Metallic Birthday Cocktail Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Sparkle</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Birthday</p>
+                        <h3 class="product-name">Silver Metallic Birthday Cocktail Dress</h3>
+                        <p class="product-price">$109.99 <span class="original">$219.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 43 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('birthday_3')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1c4534fc6-cb28-4c5d-a97a-70099177af3c.png" alt="Burgundy One Shoulder Party Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Hot Color</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Birthday</p>
+                        <h3 class="product-name">Burgundy One Shoulder Party Dress</h3>
+                        <p class="product-price">$79.99 <span class="original">$159.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 44 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('birthday_4')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/184e6785f-e679-4122-91a3-72b3a4f3d0c8.png" alt="Blush Pink Sparkle Birthday Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Instagram Worthy</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Birthday</p>
+                        <h3 class="product-name">Blush Pink Sparkle Birthday Dress</h3>
+                        <p class="product-price">$129.99 <span class="original">$259.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 45 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('birthday_5')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/179c41244-b3b6-4fcb-9700-1f32aa67b4b0.png" alt="Terracotta Velvet Birthday Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Trending</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Birthday</p>
+                        <h3 class="product-name">Terracotta Velvet Birthday Dress</h3>
+                        <p class="product-price">$99.99 <span class="original">$199.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 46 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('birthday_6')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1175c9f32-ad3d-4669-8fc9-a3c8104dc4af.png" alt="Purple Velvet Strapless Birthday Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Bold</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Birthday</p>
+                        <h3 class="product-name">Purple Velvet Strapless Birthday Dress</h3>
+                        <p class="product-price">$89.99 <span class="original">$179.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 47 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('birthday_7')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/181ed880d-d652-4dc3-8c70-4bb6173679df.png" alt="Black Sequin Birthday Mini Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Night Out</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Birthday</p>
+                        <h3 class="product-name">Black Sequin Birthday Mini Dress</h3>
+                        <p class="product-price">$119.99 <span class="original">$239.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 48 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('birthday_8')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1d3a9db7a-f12a-4eeb-a4e7-7d2c9d29ba6c.png" alt="Gold Metallic Birthday Party Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Glam</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Birthday</p>
+                        <h3 class="product-name">Gold Metallic Birthday Party Dress</h3>
+                        <p class="product-price">$139.99 <span class="original">$279.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Graduation Section -->
+        <section id="graduation" class="section">
+            <div class="section-header">
+                <h2 class="section-title">Graduation Dresses</h2>
+                <p class="section-subtitle">Celebrate your achievement in style</p>
+            </div>
+            <div class="product-grid">
+                <!-- Product 49 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('graduation_1')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1c0d48266-8a1d-46e8-b43d-5589d84efea1.png" alt="White Lace Graduation Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Classic</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Graduation</p>
+                        <h3 class="product-name">White Lace Graduation Dress</h3>
+                        <p class="product-price">$109.99 <span class="original">$219.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 50 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('graduation_2')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/16c997e07-5724-4cdd-91c9-8411bc3ebf4d.png" alt="Floral Midi Graduation Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Spring</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Graduation</p>
+                        <h3 class="product-name">Floral Midi Graduation Dress</h3>
+                        <p class="product-price">$89.99 <span class="original">$179.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 51 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('graduation_3')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1ca550df5-74d6-4c95-8b9e-8cdc80027207.png" alt="Sage Green Graduation Maxi Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Elegant</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Graduation</p>
+                        <h3 class="product-name">Sage Green Graduation Maxi Dress</h3>
+                        <p class="product-price">$99.99 <span class="original">$199.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 52 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('graduation_4')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/14bcffa47-5ec9-4847-9ccc-a3775d07a4de.png" alt="Burgundy Off-Shoulder Graduation Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Sophisticated</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Graduation</p>
+                        <h3 class="product-name">Burgundy Off-Shoulder Graduation Dress</h3>
+                        <p class="product-price">$94.99 <span class="original">$189.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 53 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('graduation_5')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/12cec6f78-d44b-4bf5-a2d7-e29d97b1211b.png" alt="Navy Lace Graduation Cocktail Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Timeless</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Graduation</p>
+                        <h3 class="product-name">Navy Lace Graduation Cocktail Dress</h3>
+                        <p class="product-price">$84.99 <span class="original">$169.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 54 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('graduation_6')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1d5bed638-69ca-4065-b4d2-1ed9c3ac66eb.png" alt="Blush Pink Graduation Chiffon Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Romantic</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Graduation</p>
+                        <h3 class="product-name">Blush Pink Graduation Chiffon Dress</h3>
+                        <p class="product-price">$104.99 <span class="original">$209.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 55 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('graduation_7')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1ea26b26e-a007-4683-9ccf-b0dde100e185.png" alt="Cream Graduation Jumpsuit" class="product-image" loading="lazy">
+                        <span class="product-badge">Modern</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Graduation</p>
+                        <h3 class="product-name">Cream Graduation Jumpsuit</h3>
+                        <p class="product-price">$94.99 <span class="original">$189.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+                
+                <!-- Product 56 -->
+                <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="product-card" onclick="trackClick('graduation_8')">
+                    <div class="product-image-wrapper">
+                        <img src="https://image.qwenlm.ai/public_source/c9f5288f-75cd-4cd6-b0b4-d8860bbc6734/1981a8aef-7839-4ace-944a-36c9b90b843d.png" alt="Champagne Gold Graduation Dress" class="product-image" loading="lazy">
+                        <span class="product-badge">Luxury</span>
+                        <div class="product-overlay">
+                            <span class="product-quick-view">Quick View</span>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <p class="product-category">Graduation</p>
+                        <h3 class="product-name">Champagne Gold Graduation Dress</h3>
+                        <p class="product-price">$124.99 <span class="original">$249.99</span></p>
+                        <span class="product-cta">Shop Now</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+        
+    </main>
+    
+    <!-- SEO Keywords Section -->
+    <section class="seo-keywords">
+        <h3 class="seo-keywords-title">Popular Searches</h3>
+        <ul class="seo-keywords-list">
+            <li><a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="seo-keyword-item" onclick="trackClick('seo_prom')">prom dresses 2026</a></li>
+            <li><a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="seo-keyword-item" onclick="trackClick('seo_wedding')">wedding guest dress</a></li>
+            <li><a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="seo-keyword-item" onclick="trackClick('seo_bridesmaid')">bridesmaid dress</a></li>
+            <li><a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="seo-keyword-item" onclick="trackClick('seo_gala')">gala dress</a></li>
+            <li><a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="seo-keyword-item" onclick="trackClick('seo_redcarpet')">red carpet dress</a></li>
+            <li><a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="seo-keyword-item" onclick="trackClick('seo_birthday')">birthday outfit women</a></li>
+            <li><a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="seo-keyword-item" onclick="trackClick('seo_graduation')">graduation dress</a></li>
+            <li><a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="seo-keyword-item" onclick="trackClick('seo_formal')">formal event outfit</a></li>
+            <li><a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="seo-keyword-item" onclick="trackClick('seo_evening')">evening dresses</a></li>
+            <li><a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="seo-keyword-item" onclick="trackClick('seo_cocktail')">cocktail dresses</a></li>
+        </ul>
     </section>
-
-    <footer style="margin-top:18px">
-      <div style="font-size:13px;color:var(--muted);">© 2025 SVG Laser Cut Files</div>
+    
+    <!-- Bottom CTA Section -->
+    <section class="bottom-cta">
+        <h2 class="bottom-cta-title">✨ Ready to Find Your Perfect Dress? ✨</h2>
+        <p class="bottom-cta-text">Join thousands of satisfied customers who found their dream dress at unbeatable prices. Limited stock available - shop now before it's gone!</p>
+        <div class="bottom-cta-buttons">
+            <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="bottom-cta-btn primary" onclick="trackClick('bottom_primary')">Shop All Dresses</a>
+            <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="bottom-cta-btn secondary" onclick="trackClick('bottom_secondary')">View New Arrivals</a>
+            <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="bottom-cta-btn primary" onclick="trackClick('bottom_sale')">Shop Sale Items</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="footer-link" onclick="trackClick('footer_home')">Home</a>
+            <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="footer-link" onclick="trackClick('footer_shop')">Shop</a>
+            <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="footer-link" onclick="trackClick('footer_about')">About Us</a>
+            <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="footer-link" onclick="trackClick('footer_contact')">Contact</a>
+            <a href="https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}" class="footer-link" onclick="trackClick('footer_privacy')">Privacy Policy</a>
+        </div>
+        <p class="footer-text">© 2026 Bae Moments Collection. All rights reserved.</p>
+        <p class="footer-text">Prices and availability subject to change. Images for illustrative purposes.</p>
     </footer>
-  </div>
-
-  <script>
-    // ===== CAROUSEL (no autoplay) =====
-    document.querySelectorAll('.carousel').forEach(initCarousel);
-    function initCarousel(carousel){
-      const track = carousel.querySelector('.carousel-track');
-      const indicators = carousel.querySelector('.indicators');
-      const leftBtn = carousel.querySelector('.arrow.left');
-      const rightBtn = carousel.querySelector('.arrow.right');
-      const raw = (carousel.dataset.images || '').trim();
-      const urls = raw ? raw.split(',').map(s=>s.trim()) : ['https://picsum.photos/580/387?random=1'];
-      // create slides + indicators
-      const slides = [];
-      urls.forEach((url,i)=>{
-        const slide = document.createElement('div'); slide.className='carousel-slide';
-        const img = document.createElement('img'); img.src=url; img.loading='lazy'; img.alt = `Preview ${i+1}`;
-        slide.appendChild(img); track.appendChild(slide); slides.push(slide);
-        const dot = document.createElement('button'); if(i===0) dot.classList.add('active');
-        dot.addEventListener('click', ()=> { goTo(i, true); });
-        indicators.appendChild(dot);
-      });
-
-      let active = 0;
-      let base = 0;
-      let dragging = false;
-      let startX = 0;
-      let pointerId = null;
-
-      function updateDots(){ Array.from(indicators.children).forEach((d,i)=> d.classList.toggle('active', i===active)); }
-      function setTranslate(x, instant=false){ if(instant) track.style.transition='none'; else track.style.transition='transform .36s ease'; track.style.transform = `translateX(${x}px)`; if(instant) requestAnimationFrame(()=> track.style.transition='transform .36s ease'); }
-      function goTo(idx, instant=false){
-        active = (idx + slides.length) % slides.length;
-        const w = carousel.clientWidth;
-        base = -active * w;
-        setTranslate(base, instant);
-        updateDots();
-      }
-      function next(){ goTo(active + 1); }
-      function prev(){ goTo(active - 1); }
-
-      if(leftBtn) leftBtn.addEventListener('click', e=>{ e.stopPropagation(); prev(); });
-      if(rightBtn) rightBtn.addEventListener('click', e=>{ e.stopPropagation(); next(); });
-
-      // click on image area -> next
-      carousel.addEventListener('click', e=>{
-        if(e.target.closest('button')) return;
-        next();
-      });
-
-      // pointer events
-      carousel.addEventListener('pointerdown', e=>{
-        pointerId = e.pointerId; carousel.setPointerCapture(pointerId);
-        dragging = true; startX = e.clientX; track.style.transition='none';
-      });
-      carousel.addEventListener('pointermove', e=>{
-        if(!dragging || e.pointerId !== pointerId) return;
-        const dx = e.clientX - startX; setTranslate(base + dx, true);
-      });
-      carousel.addEventListener('pointerup', e=>{
-        if(!dragging || e.pointerId !== pointerId) return;
-        const dx = e.clientX - startX; dragging=false; carousel.releasePointerCapture(pointerId);
-        const w = carousel.clientWidth;
-        if(dx > w*0.15) prev();
-        else if(dx < -w*0.15) next();
-        else goTo(active);
-      });
-      carousel.addEventListener('pointercancel', ()=>{ dragging=false; goTo(active); });
-
-      // touch fallback
-      carousel.addEventListener('touchstart', e=>{ startX = e.touches[0].clientX; dragging=true; track.style.transition='none'; }, {passive:true});
-      carousel.addEventListener('touchmove', e=>{ if(!dragging) return; const dx = e.touches[0].clientX - startX; setTranslate(base + dx, true); }, {passive:true});
-      carousel.addEventListener('touchend', e=>{ if(!dragging) return; const dx = e.changedTouches[0].clientX - startX; dragging=false; const w = carousel.clientWidth; if(dx > w*0.15) prev(); else if(dx < -w*0.15) next(); else goTo(active); }, {passive:true});
-
-      // resize observer to keep px-based translate correct
-      new ResizeObserver(()=> goTo(active, true)).observe(carousel);
-
-      // init position
-      goTo(0, true);
-    }
-
-    // ===== DESCRIPTION: inline data-desc OR existing inner text =====
-    document.querySelectorAll('.card').forEach(card=>{
-      const descBox = card.querySelector('.desc-box');
-      if(!descBox) return;
-      // priority: data-desc attribute (text), else keep inline children inside .desc-box
-      const txt = card.dataset.desc ? card.dataset.desc.trim() : (descBox.innerText || '').trim();
-      const max = parseInt(descBox.dataset.maxChars || '300', 10);
-      function renderText(full){
-        const base = full ? txt : (txt.length > max ? txt.slice(0, max) + '…' : txt);
-        descBox.innerHTML = '<p>' + (base || 'Описание недоступно.') + '</p>';
-        if(!full && txt.length > max){
-          const btn = document.createElement('button');
-          btn.textContent = 'Show more';
-          btn.style.marginTop='8px'; btn.style.background='transparent'; btn.style.border='none'; btn.style.color='#1850b8'; btn.style.cursor='pointer';
-          btn.addEventListener('click', ()=> { renderText(true); });
-          descBox.appendChild(btn);
-        } else if (full && txt.length > max) {
-          const btn = document.createElement('button');
-          btn.textContent = 'Show less';
-          btn.style.marginTop='8px'; btn.style.background='transparent'; btn.style.border='none'; btn.style.color='#1850b8'; btn.style.cursor='pointer';
-          btn.addEventListener('click', ()=> { renderText(false); });
-          descBox.appendChild(btn);
+    
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Affiliate URL
+        const AFFILIATE_URL = 'https://myblogshop.top/r/r86t8g3M/s?utm_source=Pinterest&utm_medium={campaignid}&utm_campaign=social&utm_content={adgroupid}';
+        
+        // Track click events
+        function trackClick(elementId) {
+            // Analytics tracking placeholder
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'click', {
+                    'event_category': 'affiliate',
+                    'event_label': elementId
+                });
+            }
+            console.log('Click tracked:', elementId);
         }
-      }
-      renderText(false);
-    });
-
-    // ===== DOWNLOAD buttons wired to data-download-url =====
-    document.querySelectorAll('.card').forEach(card=>{
-      const url = card.dataset.downloadUrl;
-      const btn = card.querySelector('.btn-download');
-      if(!btn) return;
-      if(url){
-        btn.addEventListener('click', ()=> window.open(url, '_blank'));
-      } else {
-        btn.addEventListener('click', ()=> alert('Ссылка на скачивание не указана.'));
-      }
-    });
-
-    // Optional: small UX improvement for Google Sites embedding: ensure iframes scale, avoid fixed positioning.
-
-  </script>
+        
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Show/hide scroll to top button
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.getElementById('scrollTop');
+            if (window.pageYOffset > 300) {
+                scrollTop.classList.add('visible');
+            } else {
+                scrollTop.classList.remove('visible');
+            }
+        });
+        
+        // Active navigation highlighting
+        const sections = document.querySelectorAll('.section');
+        const navItems = document.querySelectorAll('.nav-item a');
+        
+        window.addEventListener('scroll', function() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === '#' + current) {
+                    item.classList.add('active');
+                }
+            });
+        });
+        
+        // Lazy loading enhancement
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img[loading="lazy"]');
+            
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.dataset.src || img.src;
+                            img.classList.add('loaded');
+                            observer.unobserve(img);
+                        }
+                    });
+                });
+                
+                images.forEach(img => imageObserver.observe(img));
+            }
+        });
+        
+        // Add click handler to all product cards for better tracking
+        document.querySelectorAll('.product-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Prevent default if it's not the anchor
+                if (e.target.tagName !== 'A') {
+                    const link = this.getAttribute('href');
+                    if (link) {
+                        window.location.href = link;
+                    }
+                }
+            });
+        });
+        
+        // Performance: Preload critical images
+        function preloadImages() {
+            const criticalImages = document.querySelectorAll('.product-grid:first-of-type .product-image');
+            criticalImages.forEach(img => {
+                const link = document.createElement('link');
+                link.rel = 'preload';
+                link.as = 'image';
+                link.href = img.src;
+                document.head.appendChild(link);
+            });
+        }
+        
+        // Initialize preload
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', preloadImages);
+        } else {
+            preloadImages();
+        }
+        
+        // Add hover effect enhancement for mobile
+        if ('ontouchstart' in window) {
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('touchstart', function() {
+                    this.style.transform = 'translateY(-4px)';
+                });
+                card.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                });
+            });
+        }
+    </script>
 </body>
 </html>
+
